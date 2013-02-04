@@ -1,0 +1,85 @@
+<!--
+/**
+ * @author        Ronald Marske <ronaldmarske@yaoo.de>
+ * @filesource    Resources/JavaScript/template.js
+ *
+ * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without
+ * modification, are permitted provided that the following conditions
+ * are met:
+ *
+ *     * Redistributions of source code must retain the above copyright
+ *       notice, this list of conditions and the following disclaimer.
+ *
+ *     * Redistributions in binary form must reproduce the above copyright
+ *       notice, this list of conditions and the following disclaimer in
+ *       the documentation and/or other materials provided with the
+ *       distribution.
+ *
+ *     * Neither the name of Ronald Marske nor the names of his
+ *       contributors may be used to endorse or promote products derived
+ *       from this software without specific prior written permission.
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS
+ * FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE
+ * COPYRIGHT OWNER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT,
+ * INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING,
+ * BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+ * LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
+ * CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT
+ * LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN
+ * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+ * POSSIBILITY OF SUCH DAMAGE.
+ */
+-->
+<!DOCTYPE html>
+<html>
+	<head>
+
+		<script type="text/javascript" src="Resources/JavaScript/mootools.js"></script>
+		<script type="text/javascript" src="Resources/JavaScript/LocalStorage.js"></script>
+
+		<script type="text/javascript" src="Resources/JavaScript/template.js"></script>
+		<script type="text/javascript" src="Resources/JavaScript/Application.js"></script>
+
+		<link rel="stylesheet" href="Resources/css/style.css" type="text/css" charset="utf-8">
+
+		<title>Utimate Spirit Analysis</title>
+	</head>
+
+	<body data-controller="Application/init">
+		<h1>Ultimate Spirit Analysis</h1>
+
+		<div class="content">
+			<div class="tournaments">
+
+				<div class="box">
+					<h2>Tournaments</h2>
+
+					<div class="tournament new">
+						<input name="name" value="" />
+					</div>
+					<div class="tournament">
+						<h3>W.U.F.F</h3>
+						<a class="button delete">delete</a>
+					</div>
+					<div class="tournament">
+						<h3>A Reli Damen Indoor 2013</h3>
+						<a class="button delete">delete</a>
+					</div>
+
+
+					<div class="noResult hidden">There is no tournament created - please add a tournament using the button on the right side</div>
+				</div>
+				<div class="buttons">
+					<a class="button green">Add Tournament</a>
+				</div>
+			</div>
+		</div>
+
+		<div class="copyright"><a href="mailto:ronaldmarske@yahoo.de?subject=Ultimate Spirit Analysis">Copyright (c) 2012 Ronald Marske, All rights reserved.</a> <a class="github" href="https://github.com/Scyks/UltimateSpirit" target="_blank">Visit on Github</div>
+	</body>
+</html>
