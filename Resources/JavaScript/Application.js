@@ -36,11 +36,35 @@
 
 var Application = new Class({
 
+	Extends: Controller,
+	page: 'start',
+
+
 	initAction: function() {
 
-		var Storage = new LocalStorage();
+		var aPages = document.location.href.split('#');
+		if (2 == aPages.length) {
+			this.page = aPages[1];
+		} else {
+			aPages[1] = this.page;
+		}
 
-		var aTournaments = Storage.get('tournaments');
-		console.log(aTournaments);
+		document.location.href = aPages.join('#');
+
+		switch(this.page) {
+			case 'start':
+				this.getController('Dashboard').init();
+				break;
+		}
+
+
+	},
+
+	getController: function(sController) {
+		if ('class' == typeOf(window[sController])) {
+			window[sController] = new window[sController]();
+		}
+
+		return window[sController];
 	}
 });

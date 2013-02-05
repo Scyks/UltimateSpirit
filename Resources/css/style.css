@@ -50,6 +50,16 @@ html {
 body {
   padding: 20px;
 }
+body.loading .loading {
+  display: block;
+  width: 30px;
+  left: 45%;
+  top: 45%;
+  position: absolute;
+}
+body .loading {
+  display: none;
+}
 .button {
   padding: 5px 20px;
   color: #FFF;
@@ -80,7 +90,7 @@ h1 {
   margin-bottom: 40px;
 }
 .hidden {
-  display: none;
+  display: none !important;
 }
 .copyright {
   position: fixed;
@@ -98,12 +108,12 @@ h1 {
   text-decoration: underline;
 }
 .tournaments {
-  width: 500px;
+  width: 650px;
   margin: auto;
   overflow: hidden;
 }
 .tournaments .box {
-  width: 260px;
+  width: 420px;
   float: left;
   margin-right: 20px;
   min-height: 300px;
@@ -128,6 +138,7 @@ h1 {
   color: #CCC;
   float: left;
   cursor: pointer;
+  width: 360px;
 }
 .tournaments .tournament a {
   float: right;
@@ -167,7 +178,7 @@ h1 {
 .tournaments .tournament.new input {
   border: 1px solid rgba(50, 50, 50, 0.6);
   background: #fafafa;
-  width: 248px;
+  width: 408px;
   border-radius: 5px;
   padding: 5px;
   display: block;

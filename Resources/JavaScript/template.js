@@ -52,16 +52,21 @@ var Template = new (new Class({
 			var sController = oElement.get('data-controller').split('/')[0];
 			var sAction = oElement.get('data-controller').split('/')[1];
 
-			try {
-				var oController = new window[sController]();
+//			try {
+				if ('class' == typeOf(window[sController])) {
+					window[sController] = new window[sController]();
+				}
+				var oController = window[sController];
+
+
 				if (undefined !== oController[sAction + 'Action']) {
 					oController[sAction + 'Action'](oElement);
 				} else {
 					throw "Action " + sAction + " was not found in Controller " + sController;
 				}
-			} catch(e) {
-				console.error(e);
-			}
+//			} catch(e) {
+//				console.error(e);
+//			}
 
 
 		});

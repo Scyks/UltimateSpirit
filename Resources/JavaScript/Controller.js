@@ -1,7 +1,6 @@
-<!--
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/JavaScript/template.js
+ * @filesource    Resources/JavaScript/Controller.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -34,34 +33,27 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
--->
-<!DOCTYPE html>
-<html>
-	<head>
 
-		<script type="text/javascript" src="Resources/JavaScript/mootools.js"></script>
-		<script type="text/javascript" src="Resources/JavaScript/LocalStorage.js"></script>
+var Controller = new Class({
 
-		<script type="text/javascript" src="Resources/JavaScript/mootools.mustache.js"></script>
+	storage: null,
 
-		<script type="text/javascript" src="Resources/JavaScript/template.js"></script>
-		<script type="text/javascript" src="Resources/JavaScript/Controller.js"></script>
-		<script type="text/javascript" src="Resources/JavaScript/Application.js"></script>
-		<script type="text/javascript" src="Resources/JavaScript/Dashboard.js"></script>
+	initialize: function() {
+		this.storage = new LocalStorage();
+	},
 
-		<link rel="stylesheet" href="Resources/css/style.css" type="text/css" charset="utf-8">
+	loadTemplate: function(file, callback) {
+		new Request.HTML({
+			url: 'Resources/templates/' + file + '.html',
+			method: 'get',
 
-		<title>Utimate Spirit Analysis</title>
-	</head>
+			onFailure: function(er) {
+				if (er.readyState == 4) {
+					callback(er.responseText);
+				}
+			}
+		}).get();
+	}
 
-	<body data-controller="Application/init">
 
-		<h1>Ultimate Spirit Analysis</h1>
-
-		<div class="box loading"><img src="Resources/images/10.gif" alt="loading" /></div>
-		<div class="content"></div>
-
-		<div class="copyright"><a href="mailto:ronaldmarske@yahoo.de?subject=Ultimate Spirit Analysis">Copyright (c) 2012 Ronald Marske, All rights reserved.</a> <a class="github" href="https://github.com/Scyks/UltimateSpirit" target="_blank">Visit on Github</div>
-
-	</body>
-</html>
+});
