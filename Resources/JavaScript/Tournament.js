@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/JavaScript/Controller.js
+ * @filesource    Resources/JavaScript/Tournament.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -34,42 +34,51 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-var Controller = new Class({
+var Tournament = new Class({
 
-	storage: null,
+	Extends: Controller,
+	template: null,
+	id: null,
 
-	initialize: function() {
-		this.storage = new LocalStorage();
+	init: function(params) {
+
+		this.id = params.id;
+
+		document.body.getElement('.content').empty();
+		document.body.addClass('loading');
+
+		//this.storage.remove('tournaments');
+
+		this.loadTemplate('tournament', function(response) {
+
+			this.template = response;
+			this.refreshList();
+			document.body.removeClass('loading');
+		}.bind(this));
+
+
 	},
 
-	getController: function(sController) {
-		if ('class' == typeOf(window[sController])) {
-			window[sController] = new window[sController]();
-		}
+	refreshList: function() {
 
-		return window[sController];
-	},
+		var aTournaments = this.loadTournaments();
 
-	loadTournaments: function() {
-		var tournaments = this.storage.get('tournaments');
-		if (null == tournaments) {
-			tournaments = [];
-		}
-
-		return tournaments;
-	},
-
-	loadTemplate: function(file, callback) {
-		new Request.HTML({
-			url: 'Resources/templates/' + file + '.html',
-			method: 'get',
-
-			onFailure: function(er) {
-				if (er.readyState == 4) {
-					callback(er.responseText);
-				}
+		for(var i = 0; i < aTournaments.length; i++) {
+			if (aTournaments[i].id == this.id) {
+				this.tournament = aTournaments[i];
+				break;
 			}
-		}).get();
+		}
+
+		var obj = {
+			name: this.tournament.name
+
+		};
+
+		var HTML = Mustache.render(this.template, obj);
+		document.body.getElement('.content').set('html', HTML);
+		Template.parse(document.body.getElement('.content'));
+
 	}
 
 

@@ -107,40 +107,44 @@ h1 {
 .copyright a:hover {
   text-decoration: underline;
 }
-.tournaments {
+.dashboard {
   width: 650px;
   margin: auto;
   overflow: hidden;
 }
-.tournaments .box {
+.dashboard .box {
   width: 420px;
   float: left;
   margin-right: 20px;
   min-height: 300px;
 }
-.tournaments .buttons {
+.dashboard .buttons {
   margin-top: 6px;
 }
-.tournaments .noResult {
+.dashboard .noResult {
   color: #666;
 }
-.tournaments .tournament {
+.dashboard .tournament {
   display: block;
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
-  padding: 10px 0px;
+  padding: 10px 10px;
   clear: both;
   overflow: hidden;
+  border-radius: 5px;
 }
-.tournaments .tournament:last-child {
+.dashboard .tournament:hover {
+  background-color: rgba(50, 50, 50, 0.5);
+}
+.dashboard .tournament:last-child {
   border: none;
 }
-.tournaments .tournament h3 {
+.dashboard .tournament h3 {
   color: #CCC;
   float: left;
   cursor: pointer;
-  width: 360px;
+  width: 340px;
 }
-.tournaments .tournament a {
+.dashboard .tournament a {
   float: right;
   padding: 3px 10px;
   border: none;
@@ -148,7 +152,7 @@ h1 {
   color: #666;
   font-weight: normal;
 }
-.tournaments .tournament a:hover {
+.dashboard .tournament a:hover {
   color: #fff;
   background: #a90329;
   /* Old browsers */
@@ -175,7 +179,7 @@ h1 {
   /* IE6-9 */
 
 }
-.tournaments .tournament.new input {
+.dashboard .tournament.new input {
   border: 1px solid rgba(50, 50, 50, 0.6);
   background: #fafafa;
   width: 408px;

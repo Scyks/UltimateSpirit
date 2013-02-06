@@ -37,34 +37,62 @@
 var Application = new Class({
 
 	Extends: Controller,
-	page: 'start',
-
+	page: 'Dashboard',
+	params: {},
+	root: null,
 
 	initAction: function() {
 
 		var aPages = document.location.href.split('#');
+		this.root = aPages[0];
+
 		if (2 == aPages.length) {
-			this.page = aPages[1];
+
+			if (-1 !== aPages[1].indexOf('?')) {
+				var Params = aPages[1].split('?');
+				this.page = Params[0];
+				var aParams = Params[1].split('&');
+				aParams.each(function(param) {
+					keyValue = param.split('=');
+					this.params[keyValue[0]] = keyValue[1];
+				}.bind(this));
+
+			} else {
+				this.page = aPages[1];
+			}
+
 		} else {
 			aPages[1] = this.page;
+			document.location.href = aPages.join('#');
 		}
 
-		document.location.href = aPages.join('#');
 
-		switch(this.page) {
-			case 'start':
-				this.getController('Dashboard').init();
-				break;
-		}
+		this.getController(this.page).init(this.params);
 
 
 	},
 
-	getController: function(sController) {
-		if ('class' == typeOf(window[sController])) {
-			window[sController] = new window[sController]();
+	open: function(controller, params) {
+		var sUrl = this.root;
+		sUrl += '#' + controller;
+
+		aParams = [];
+		Object.each(params, function(el, key) {
+			aParams.push(key+'='+el);
+		});
+
+		if (0 < aParams.length) {
+			sUrl += '?' + aParams.join('&');
 		}
 
-		return window[sController];
+		document.location.href = sUrl;
+
+	},
+
+	historyAction: function() {
+		window.onpopstate = function() {
+			this.initAction();
+		}.bind(this);
+
 	}
 });

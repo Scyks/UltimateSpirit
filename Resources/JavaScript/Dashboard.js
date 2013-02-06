@@ -73,22 +73,13 @@ var Dashboard = new Class({
 
 	},
 
-	loadTournaments: function() {
-		var tournaments = this.storage.get('tournaments');
-		if (null == tournaments) {
-			tournaments = [];
-		}
-
-		return tournaments;
-	},
-
 	addTournamentAction: function(oElement) {
 		oElement.addEvent('click', function() {
 			var oContent = document.getElement('.content');
-			if (oContent.getElement('.tournaments .noResult'))
-				oContent.getElement('.tournaments .noResult').addClass('hidden');
-			oContent.getElement('.tournaments .new').removeClass('hidden');
-			oContent.getElement('.tournaments .new input').focus();
+			if (oContent.getElement('.dashboard .noResult'))
+				oContent.getElement('.dashboard .noResult').addClass('hidden');
+			oContent.getElement('.dashboard .new').removeClass('hidden');
+			oContent.getElement('.dashboard .new input').focus();
 		});
 	},
 
@@ -105,9 +96,9 @@ var Dashboard = new Class({
 
 			} else if(27 == oEvent.code) {
 				var oContent = document.getElement('.content');
-				if (oContent.getElement('.tournaments .noResult'))
-					oContent.getElement('.tournaments .noResult').removeClass('hidden');
-				oContent.getElement('.tournaments .new').addClass('hidden');
+				if (oContent.getElement('.dashboard .noResult'))
+					oContent.getElement('.dashboard .noResult').removeClass('hidden');
+				oContent.getElement('.dashboard .new').addClass('hidden');
 			}
 		}.bind(this));
 	},
@@ -136,9 +127,8 @@ var Dashboard = new Class({
 
 	openAction: function(oElement) {
 		oElement.addEvent('click', function() {
-			var oContent = document.getElement('.content');
-			oContent.empty();
-			document.body.addClass('loading');
-		});
+			var oApplication = this.getController('Application');
+			oApplication.open('Tournament', {id: oElement.get('data-id')});
+		}.bind(this));
 	}
 });
