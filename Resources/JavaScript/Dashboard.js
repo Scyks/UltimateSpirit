@@ -37,7 +37,33 @@
 var Dashboard = new Class({
 
 	Extends: Controller,
-	template: null,
+	template: '\
+	<div class="dashboard">\
+		<div class="box">\
+			<h2>Tournaments</h2>\
+			\
+			{{#noResult}}\
+			<div class="noResult">\
+				There is no tournament created - please add a tournament using the button on the right side\
+			</div>\
+			{{/noResult}}\
+			\
+			<div class="tournament new hidden">\
+				<input name="name" value="" data-controller="Dashboard/save" />\
+			</div>\
+			\
+			{{#tournaments}}\
+			<div class="tournament" data-id="{{id}}" data-controller="Dashboard/open">\
+				<h3 >{{name}}</h3>\
+				<a class="button delete" data-id="{{id}}" data-controller="Dashboard/delete">delete</a>\
+			</div>\
+			{{/tournaments}}\
+		</div>\
+		\
+		<div class="buttons">\
+			<a class="button green" data-controller="Dashboard/addTournament">Add Tournament</a>\
+		</div>\
+	</div>',
 
 	init: function() {
 
@@ -46,12 +72,10 @@ var Dashboard = new Class({
 
 		//this.storage.remove('tournaments');
 
-		this.loadTemplate('dashboard', function(response) {
 
-			this.template = response;
-			this.refreshList();
-			document.body.removeClass('loading');
-		}.bind(this));
+		this.refreshList();
+		document.body.removeClass('loading');
+
 
 
 	},
@@ -108,6 +132,8 @@ var Dashboard = new Class({
 		var id = oElement.get('data-id');
 
 		oElement.addEvent('click', function(oEvent) {
+			oEvent.stopPropagation();
+			oEvent.preventDefault();
 			if (true === confirm('do you really want to delete this tournament including all analysis?')) {
 				var id = oElement.get('data-id');
 

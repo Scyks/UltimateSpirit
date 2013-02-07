@@ -57,19 +57,6 @@ var Controller = new Class({
 		}
 
 		return tournaments;
-	},
-
-	loadTemplate: function(file, callback) {
-		new Request.HTML({
-			url: 'Resources/templates/' + file + '.html',
-			method: 'get',
-
-			onFailure: function(er) {
-				if (er.readyState == 4) {
-					callback(er.responseText);
-				}
-			}
-		}).get();
 	}
 
 

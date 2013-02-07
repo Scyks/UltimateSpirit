@@ -37,7 +37,22 @@
 var Tournament = new Class({
 
 	Extends: Controller,
-	template: null,
+	template: '\
+	<a class="button mBottom5" data-controller="Tournament/back">&laquo; back</a>\
+	\
+	<div class="matches">\
+		<div class="box">\
+			<h2>{{name}}</h2>\
+			\
+			<div class="teams">\
+				<ul>\
+					<li>Teamname</li>\
+					<li>Teamname</li>\
+					<li>Teamname</li>\
+				</ul>\
+			</div>\
+		</div>\
+	</div>',
 	id: null,
 
 	init: function(params) {
@@ -49,12 +64,9 @@ var Tournament = new Class({
 
 		//this.storage.remove('tournaments');
 
-		this.loadTemplate('tournament', function(response) {
+		this.refreshList();
+		document.body.removeClass('loading');
 
-			this.template = response;
-			this.refreshList();
-			document.body.removeClass('loading');
-		}.bind(this));
 
 
 	},
@@ -79,7 +91,12 @@ var Tournament = new Class({
 		document.body.getElement('.content').set('html', HTML);
 		Template.parse(document.body.getElement('.content'));
 
-	}
+	},
 
+	backAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			this.getController('Application').open('Dashboard');
+		}.bind(this));
+	}
 
 });

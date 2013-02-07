@@ -61,15 +61,19 @@ body .loading {
   display: none;
 }
 .button {
-  padding: 5px 20px;
+  background: #111;
+  border-radius: 5px;
   color: #FFF;
   cursor: pointer;
-  border-radius: 5px;
+  display: inline-block;
   font-weight: bold;
-  border: 1px solid #666;
+  padding: 5px 20px;
 }
 .button:hover {
-  background: #111;
+  background: #222;
+}
+.button.mBottom5 {
+  margin-bottom: 5px;
 }
 .box {
   background: rgba(20, 20, 20, 0.5);
