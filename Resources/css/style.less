@@ -34,6 +34,10 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
+.transform(@deg: -45deg, @translate: 42px) {
+	transform: rotate(@deg) scale(1.05) skew(-13deg) translate(@translate);
+}
+
 * {
 	border: none;
 	margin: 0;
@@ -81,9 +85,13 @@ body {
 		background: #222;
 	}
 
-	&.mBottom5 {
-		margin-bottom: 5px;
+	&.mBottom10 {
+		margin-bottom: 10px;
 	}
+	&.mRight20 {
+		margin-right: 20px;
+	}
+
 }
 
 .box {
@@ -129,6 +137,13 @@ h1 {
 	}
 }
 
+input {
+	border: 1px solid rgba(50, 50, 50, 0.6);
+	background: rgba(250, 250, 250, 1.6);
+	border-radius: 5px;
+	padding: 5px;
+	display:block;
+}
 // Content
 .dashboard {
 	width: 650px;
@@ -195,14 +210,66 @@ h1 {
 		&.new {
 
 			input {
-				border: 1px solid rgba(50, 50, 50, 0.6);
-				background: rgba(250, 250, 250, 1.6);
-				width: 408px;
-				border-radius: 5px;
-				padding: 5px;
-				display:block;
+				width: 387px;
 			}
 		}
 	}
 
+}
+
+.matches {
+	.teams {
+		li {
+			border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+			color: #CCCCCC;
+			list-style: none;
+			padding: 5px;
+
+			span {
+				display: inline-block;
+
+				&.team{width: 193px;}
+				&.average{
+					width: 46px; text-align: center; border-right: 1px solid rgba(125, 125, 125, 0.3);
+				}
+			}
+			&:last-child {
+				border: none;
+			}
+
+			&.add {
+				input {
+					margin-bottom: 5px;
+					width: 300px;
+				}
+			}
+
+			&.headline {
+				position: relative;
+				height: 40px;
+
+				span {
+					.transform(320deg);
+					bottom: 10px;
+					border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+					border-right: 0px;
+					color: #999;
+					display: inline-block;
+					font-size: 11px;
+					left: 200px;
+					text-align: left;
+					padding: 0px 10px 5px;
+					position: absolute;
+					width: 100px;
+
+					&.rules {left: 250px;}
+					&.fouls {left: 300px;}
+					&.fair {left: 350px;}
+					&.attitude {left: 400px;}
+					&.spirit {left: 450px;}
+				}
+
+			}
+		}
+	}
 }

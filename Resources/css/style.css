@@ -72,8 +72,11 @@ body .loading {
 .button:hover {
   background: #222;
 }
-.button.mBottom5 {
-  margin-bottom: 5px;
+.button.mBottom10 {
+  margin-bottom: 10px;
+}
+.button.mRight20 {
+  margin-right: 20px;
 }
 .box {
   background: rgba(20, 20, 20, 0.5);
@@ -110,6 +113,13 @@ h1 {
 }
 .copyright a:hover {
   text-decoration: underline;
+}
+input {
+  border: 1px solid rgba(50, 50, 50, 0.6);
+  background: #fafafa;
+  border-radius: 5px;
+  padding: 5px;
+  display: block;
 }
 .dashboard {
   width: 650px;
@@ -184,10 +194,62 @@ h1 {
 
 }
 .dashboard .tournament.new input {
-  border: 1px solid rgba(50, 50, 50, 0.6);
-  background: #fafafa;
-  width: 408px;
-  border-radius: 5px;
+  width: 387px;
+}
+.matches .teams li {
+  border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+  color: #CCCCCC;
+  list-style: none;
   padding: 5px;
-  display: block;
+}
+.matches .teams li span {
+  display: inline-block;
+}
+.matches .teams li span.team {
+  width: 193px;
+}
+.matches .teams li span.average {
+  width: 46px;
+  text-align: center;
+  border-right: 1px solid rgba(125, 125, 125, 0.3);
+}
+.matches .teams li:last-child {
+  border: none;
+}
+.matches .teams li.add input {
+  margin-bottom: 5px;
+  width: 300px;
+}
+.matches .teams li.headline {
+  position: relative;
+  height: 40px;
+}
+.matches .teams li.headline span {
+  transform: rotate(320deg) scale(1.05) skew(-13deg) translate(42px);
+  bottom: 10px;
+  border-bottom: 1px solid rgba(125, 125, 125, 0.3);
+  border-right: 0px;
+  color: #999;
+  display: inline-block;
+  font-size: 11px;
+  left: 200px;
+  text-align: left;
+  padding: 0px 10px 5px;
+  position: absolute;
+  width: 100px;
+}
+.matches .teams li.headline span.rules {
+  left: 250px;
+}
+.matches .teams li.headline span.fouls {
+  left: 300px;
+}
+.matches .teams li.headline span.fair {
+  left: 350px;
+}
+.matches .teams li.headline span.attitude {
+  left: 400px;
+}
+.matches .teams li.headline span.spirit {
+  left: 450px;
 }

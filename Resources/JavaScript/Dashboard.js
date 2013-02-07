@@ -61,7 +61,7 @@ var Dashboard = new Class({
 		</div>\
 		\
 		<div class="buttons">\
-			<a class="button green" data-controller="Dashboard/addTournament">Add Tournament</a>\
+			<a class="button" data-controller="Dashboard/addTournament">Add Tournament</a>\
 		</div>\
 	</div>',
 

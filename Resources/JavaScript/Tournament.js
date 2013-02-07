@@ -38,7 +38,8 @@ var Tournament = new Class({
 
 	Extends: Controller,
 	template: '\
-	<a class="button mBottom5" data-controller="Tournament/back">&laquo; back</a>\
+	<a class="button mBottom10 mRight20" data-controller="Tournament/back">&laquo; back</a>\
+	<a class="button mBottom10" data-controller="Tournament/addTeam">add Team</a>\
 	\
 	<div class="matches">\
 		<div class="box">\
@@ -46,9 +47,44 @@ var Tournament = new Class({
 			\
 			<div class="teams">\
 				<ul>\
-					<li>Teamname</li>\
-					<li>Teamname</li>\
-					<li>Teamname</li>\
+					<li class="add hidden">\
+						<input name="name" value="" data-controller="Dashboard/save" />\
+					</li>\
+					<li class="headline">\
+						<span class="average">Average</span>\
+						<span class="rules average">Rules Knowledge</span>\
+						<span class="fouls average">Fouls and Contact</span>\
+						<span class="fair average">Fair-Mindedness</span>\
+						<span class="attitude average">Positive Attitude</span>\
+						<span class="spirit average">Our Spirit</span>\
+					</li>\
+					<li>\
+						<span class="team">Hund Flach Werfen</span>\
+						<span class="average">20</span>\
+						<span class="rules average">20</span>\
+						<span class="fouls average">20</span>\
+						<span class="fair average">20</span>\
+						<span class="attitude average">20</span>\
+						<span class="spirit average">20</span>\
+					</li>\
+					<li>\
+						<span class="team">7,5 Suppengrün</span>\
+						<span class="average">20</span>\
+						<span class="rules average">20</span>\
+						<span class="fouls average">20</span>\
+						<span class="fair average">20</span>\
+						<span class="attitude average">20</span>\
+						<span class="spirit average">20</span>\
+					</li>\
+					<li>\
+						<span class="team">black block</span>\
+						<span class="average">20</span>\
+						<span class="rules average">20</span>\
+						<span class="fouls average">20</span>\
+						<span class="fair average">20</span>\
+						<span class="attitude average">20</span>\
+						<span class="spirit average">20</span>\
+					</li>\
 				</ul>\
 			</div>\
 		</div>\
