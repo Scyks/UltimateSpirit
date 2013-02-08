@@ -48,7 +48,8 @@ html {
   background-size: auto;
 }
 body {
-  padding: 20px;
+  padding: 20px 20px 40px;
+  position: relative;
 }
 body.loading .loading {
   display: block;
@@ -94,15 +95,15 @@ body .loading {
 h1 {
   color: #FFFFFF;
   font-size: 18px;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 }
 .hidden {
   display: none !important;
 }
 .copyright {
-  position: fixed;
+  position: absolute;
   bottom: 10px;
-  right: 10px;
+  right: 20px;
 }
 .copyright a {
   color: #CCC;
@@ -206,12 +207,15 @@ input {
   display: inline-block;
 }
 .matches .teams li span.team {
-  width: 193px;
+  width: 300px;
 }
 .matches .teams li span.average {
-  width: 46px;
+  width: 45px;
   text-align: center;
   border-right: 1px solid rgba(125, 125, 125, 0.3);
+}
+.matches .teams li span.average.complete {
+  font-weight: bold;
 }
 .matches .teams li:last-child {
   border: none;
@@ -232,24 +236,24 @@ input {
   color: #999;
   display: inline-block;
   font-size: 11px;
-  left: 200px;
+  left: 305px;
   text-align: left;
   padding: 0px 10px 5px;
   position: absolute;
   width: 100px;
 }
 .matches .teams li.headline span.rules {
-  left: 250px;
+  left: 355px;
 }
 .matches .teams li.headline span.fouls {
-  left: 300px;
+  left: 405px;
 }
 .matches .teams li.headline span.fair {
-  left: 350px;
+  left: 455px;
 }
 .matches .teams li.headline span.attitude {
-  left: 400px;
+  left: 505px;
 }
 .matches .teams li.headline span.spirit {
-  left: 450px;
+  left: 555px;
 }

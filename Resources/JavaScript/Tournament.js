@@ -43,13 +43,10 @@ var Tournament = new Class({
 	\
 	<div class="matches">\
 		<div class="box">\
-			<h2>{{name}}</h2>\
+			<h2 title="To change this tournament name use double click.">{{name}}</h2>\
 			\
 			<div class="teams">\
 				<ul>\
-					<li class="add hidden">\
-						<input name="name" value="" data-controller="Dashboard/save" />\
-					</li>\
 					<li class="headline">\
 						<span class="average">Average</span>\
 						<span class="rules average">Rules Knowledge</span>\
@@ -58,33 +55,25 @@ var Tournament = new Class({
 						<span class="attitude average">Positive Attitude</span>\
 						<span class="spirit average">Our Spirit</span>\
 					</li>\
-					<li>\
-						<span class="team">Hund Flach Werfen</span>\
-						<span class="average">20</span>\
-						<span class="rules average">20</span>\
-						<span class="fouls average">20</span>\
-						<span class="fair average">20</span>\
-						<span class="attitude average">20</span>\
-						<span class="spirit average">20</span>\
+					<li class="add hidden">\
+						<input name="name" value="" data-controller="Tournament/save" />\
 					</li>\
-					<li>\
-						<span class="team">7,5 Suppengrün</span>\
-						<span class="average">20</span>\
-						<span class="rules average">20</span>\
-						<span class="fouls average">20</span>\
-						<span class="fair average">20</span>\
-						<span class="attitude average">20</span>\
-						<span class="spirit average">20</span>\
+					{{#noResult}}\
+					<li class="noResult">\
+						There is no Team created yet. Please add a Team.\
 					</li>\
+					{{/noResult}}\
+					{{#teams}}\
 					<li>\
-						<span class="team">black block</span>\
-						<span class="average">20</span>\
-						<span class="rules average">20</span>\
-						<span class="fouls average">20</span>\
-						<span class="fair average">20</span>\
-						<span class="attitude average">20</span>\
-						<span class="spirit average">20</span>\
+						<span class="team">{{nr}}. {{name}}</span>\
+						<span class="complete average">{{average}}</span>\
+						<span class="rules average">{{rules}}</span>\
+						<span class="fouls average">{{fouls}}</span>\
+						<span class="fair average">{{fair}}</span>\
+						<span class="attitude average">{{attitude}}</span>\
+						<span class="spirit average">{{spirit}}</span>\
 					</li>\
+					{{/teams}}\
 				</ul>\
 			</div>\
 		</div>\
@@ -98,7 +87,7 @@ var Tournament = new Class({
 		document.body.getElement('.content').empty();
 		document.body.addClass('loading');
 
-		//this.storage.remove('tournaments');
+		//this.storage.remove('teams');
 
 		this.refreshList();
 		document.body.removeClass('loading');
@@ -123,6 +112,24 @@ var Tournament = new Class({
 
 		};
 
+		var aTeams = this.loadTeams();
+
+		if (undefined == aTeams[this.id] || 0 == aTeams[this.id].length) {
+			obj.noResult = true;
+		} else {
+			obj.teams = aTeams[this.id];
+		}
+
+		obj.teams.sort(function(a, b) {
+			return a.name.localeCompare(b.name)
+		});
+
+		var idx = 1;
+		obj.teams.each(function(el) {
+			el.nr = idx;
+			idx++;
+		});
+
 		var HTML = Mustache.render(this.template, obj);
 		document.body.getElement('.content').set('html', HTML);
 		Template.parse(document.body.getElement('.content'));
@@ -133,6 +140,46 @@ var Tournament = new Class({
 		oElement.addEvent('click', function() {
 			this.getController('Application').open('Dashboard');
 		}.bind(this));
+	},
+
+	addTeamAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			var oContent = document.getElement('.content');
+			if (oContent.getElement('.teams .noResult'))
+				oContent.getElement('.teams .noResult').addClass('hidden');
+			oContent.getElement('.teams .add').removeClass('hidden');
+			oContent.getElement('.teams .add input').focus();
+		});
+	},
+	saveAction: function(oElement) {
+		oElement.addEvent('keyup', function(oEvent) {
+
+			if (13 == oEvent.code) {
+				var teams = this.loadTeams();
+				if (!teams[this.id]) {
+					teams[this.id] = [];
+				}
+				teams[this.id].unshift({name: oElement.get('value'), nr: 0, average: 0, rules: 0, fouls: 0, fair: 0, attitude: 0, spirit: 0, results: []});
+				this.storage.set('teams', teams);
+
+				this.refreshList();
+
+			} else if(27 == oEvent.code) {
+				var oContent = document.getElement('.content');
+				if (oContent.getElement('.teams .noResult'))
+					oContent.getElement('.teams .noResult').removeClass('hidden');
+				oContent.getElement('.teams .add').addClass('hidden');
+			}
+		}.bind(this));
+	},
+
+	loadTeams: function() {
+		var teams = this.storage.get('teams');
+		if (null == teams) {
+			teams = {};
+		}
+
+		return teams;
 	}
 
 });

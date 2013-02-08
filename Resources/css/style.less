@@ -54,7 +54,8 @@ html {
 }
 
 body {
-	padding: 20px;
+	padding: 20px 20px 40px;
+	position: relative;
 
 	&.loading {
 		.loading {
@@ -112,7 +113,7 @@ body {
 h1 {
 	color: #FFFFFF;
 	font-size: 18px;
-	margin-bottom: 40px;
+	margin-bottom: 20px;
 }
 
 .hidden {
@@ -120,9 +121,9 @@ h1 {
 }
 .copyright {
 
-	position: fixed;
+	position: absolute;
 	bottom: 10px;
-	right: 10px;
+	right: 20px;
 
 	a {
 		color: #CCC;
@@ -228,9 +229,17 @@ input {
 			span {
 				display: inline-block;
 
-				&.team{width: 193px;}
-				&.average{
-					width: 46px; text-align: center; border-right: 1px solid rgba(125, 125, 125, 0.3);
+				&.team {
+					width: 300px;
+				}
+				&.average {
+					width: 45px;
+					text-align: center;
+					border-right: 1px solid rgba(125, 125, 125, 0.3);
+
+					&.complete {
+						font-weight: bold;
+					}
 				}
 			}
 			&:last-child {
@@ -256,17 +265,17 @@ input {
 					color: #999;
 					display: inline-block;
 					font-size: 11px;
-					left: 200px;
+					left: 305px;
 					text-align: left;
 					padding: 0px 10px 5px;
 					position: absolute;
 					width: 100px;
 
-					&.rules {left: 250px;}
-					&.fouls {left: 300px;}
-					&.fair {left: 350px;}
-					&.attitude {left: 400px;}
-					&.spirit {left: 450px;}
+					&.rules {left: 355px;}
+					&.fouls {left: 405px;}
+					&.fair {left: 455px;}
+					&.attitude {left: 505px;}
+					&.spirit {left: 555px;}
 				}
 
 			}
