@@ -61,6 +61,9 @@ body.loading .loading {
 body .loading {
   display: none;
 }
+svg#sotg {
+  background: white;
+}
 .button {
   background: #111;
   border-radius: 5px;
@@ -241,6 +244,9 @@ input {
 .dashboard .tournament.new input {
   width: 387px;
 }
+.matches input.tournament {
+  width: 300px;
+}
 .matches .teams li {
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
   color: #CCCCCC;
@@ -258,6 +264,10 @@ input {
 }
 .matches .teams li span.team {
   width: 350px;
+}
+.matches .teams li span.team input {
+  float: left;
+  width: 200px;
 }
 .matches .teams li span.team a {
   float: right;

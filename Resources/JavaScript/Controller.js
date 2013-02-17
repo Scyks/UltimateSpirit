@@ -42,7 +42,7 @@ var Controller = new Class({
 	initialize: function() {
 		//this.storage = new LocalStorage();
 
-		this.tournaments = new Collection('tournaments', true);
+		this.loadTournaments();
 	},
 
 	getController: function(sController) {
@@ -54,13 +54,10 @@ var Controller = new Class({
 	},
 
 	loadTournaments: function() {
-		return this.tournaments;
-		/*var tournaments = this.storage.get('tournaments');
-		if (null == tournaments) {
-			tournaments = [];
-		}
+		this.tournaments = new Collection('tournaments', true);
 
-		return tournaments;*/
+		return this.tournaments;
+
 	}
 
 

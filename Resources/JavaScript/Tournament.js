@@ -43,7 +43,8 @@ var Tournament = new Class({
 	\
 	<div class="matches">\
 		<div class="box">\
-			<h2 title="To change this tournament name use double click.">{{name}}</h2>\
+			<h2 data-controller="Tournament/changeTitle" title="To change this tournament name use double click.">{{name}}</h2>\
+			<input class="tournament hidden" name="title" value="{{name}}" data-controller="Tournament/changeTitle" />\
 			\
 			<div class="teams">\
 				<ul>\
@@ -66,9 +67,10 @@ var Tournament = new Class({
 					{{#teams}}\
 					<li class="teams">\
 						<span class="team">\
-							{{nr}}. {{name}}\
-							<a class="button smal delete greyFont">delete</a>\
-							<a class="button edit smal greyFont mRight10">edit</a>\
+							<span>{{nr}}. {{name}}</span>\
+							<input class="hidden" name="name" data-controller="Tournament/save" data-id="{{id}}" value="{{name}}" />\
+							<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">delete</a>\
+							<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">edit</a>\
 						</span>\
 						<span class="rules average">{{rules}}</span>\
 						<span class="fouls average">{{fouls}}</span>\
@@ -184,18 +186,132 @@ var Tournament = new Class({
 
 			if (13 == oEvent.code) {
 
-				this.tournament.teams.add(new Models_Team(oElement.get('value')));
+				// on edit
+				if (null != oElement.get('data-id')) {
+					var oTeam = this.tournament.teams.getById(oElement.get('data-id'));
+					if (oTeam) {
+						oTeam.name = oElement.get('value');
+					}
+				} else {
+					this.tournament.teams.add(new Models_Team(oElement.get('value')));
+				}
 
 
 				this.tournaments.save();
 				this.refreshList();
 
 			} else if(27 == oEvent.code) {
-				var oContent = document.getElement('.content');
-				if (oContent.getElement('.teams .noResult'))
-					oContent.getElement('.teams .noResult').removeClass('hidden');
-				oContent.getElement('.teams .add').addClass('hidden');
+
+				// on edit
+				if (null != oElement.get('data-id')) {
+
+					var oTeam = this.tournament.teams.getById(oElement.get('data-id'));
+					if (oTeam) {
+						// restore input value
+						oElement.set('value', oTeam.name);
+					}
+					// hide input
+					oElement.addClass('hidden');
+
+					// get span
+					var oSpan = oElement.getParent().getElement('span');
+
+					// show span
+					oSpan.removeClass('hidden');
+				} else {
+					var oContent = document.getElement('.content');
+					if (oContent.getElement('.teams .noResult'))
+						oContent.getElement('.teams .noResult').removeClass('hidden');
+					oContent.getElement('.teams .add').addClass('hidden');
+				}
 			}
 		}.bind(this));
+	},
+
+	/**
+	 * edit tournament name
+	 * @param Object oElement h2 or input element
+	 */
+	changeTitleAction: function(oElement) {
+
+		// parent element
+		var oParent = oElement.getParent();
+
+		// if element is h2 - add dblclick event
+		if ('h2' == oElement.get('tag')) {
+
+			oElement.addEvent('dblclick', function() {
+
+				// hide h2 and show input element
+				oParent.getElement('input').removeClass('hidden');
+				oParent.getElement('input').focus();
+
+				oElement.addClass('hidden');
+			});
+
+		// add save and cancel event to input element
+		} else if ('input' == oElement.get('tag')) {
+
+			// on keyup
+			oElement.addEvent('keyup', function(oEvent) {
+
+				// on enter
+				if (13 == oEvent.code) {
+
+					// save tournament
+					this.tournament.name = oElement.get('value');
+					this.tournaments.save();
+
+					// refresh list
+					this.refreshList();
+
+				// on escape
+				} else if (27 == oEvent.code) {
+
+					// restore input value
+					oElement.set('value', oParent.getElement('h2').get('html'));
+
+					// hide input, show h2
+					oElement.addClass('hidden');
+					oParent.getElement('h2').removeClass('hidden');
+				}
+			}.bind(this));
+		}
+	},
+
+	editTeamAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			var oParent = oElement.getParent();
+			oParent.getElement('span').addClass('hidden');
+			oParent.getElement('input').removeClass('hidden');
+			oParent.getElement('input').focus();
+		});
+	},
+
+	/**
+	 * delete action, to remove a team
+	 * @param Object oElement
+	 */
+	deleteTeamAction: function(oElement) {
+
+		// get id
+		var id = oElement.get('data-id');
+
+		// add click event
+		oElement.addEvent('click', function(oEvent) {
+			oEvent.stop();
+
+			// ask user
+			if (true === confirm('Do you really want to delete this team including all analysis?')) {
+
+				// delete and save
+				this.tournament.teams.deleteById(id);
+				this.tournaments.save();
+
+				// refresh html
+				this.refreshList();
+			}
+		}.bind(this));
+
 	}
 });

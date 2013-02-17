@@ -78,6 +78,8 @@ var Dashboard = new Class({
 		// show loading
 		document.body.addClass('loading');
 
+		this.loadTournaments();
+
 		// render Template
 		this.refreshList();
 
@@ -174,7 +176,7 @@ var Dashboard = new Class({
 
 					// get tournament
 					var oTournament = this.tournaments.getById(oElement.get('data-id'));
-					console.log(typeOf(oTournament));
+
 					if (oTournament) {
 						oTournament.name = oElement.get('value');
 					}
