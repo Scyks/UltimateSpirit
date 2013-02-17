@@ -53,9 +53,11 @@ var Dashboard = new Class({
 			</div>\
 			\
 			{{#tournaments}}\
-			<div class="tournament" data-id="{{id}}" data-controller="Dashboard/open">\
-				<h3 >{{name}}</h3>\
-				<a class="button delete" data-id="{{id}}" data-controller="Dashboard/delete">delete</a>\
+			<div class="tournament">\
+				<h3  data-id="{{id}}" data-controller="Dashboard/open">{{name}}</h3>\
+				<input name="name" data-id="{{id}}" value="{{name}}" class="hidden" data-controller="Dashboard/save" />\
+				<a class="button delete smal greyFont" data-id="{{id}}" data-controller="Dashboard/delete">delete</a>\
+				<a class="button edit smal greyFont mRight10" data-controller="Dashboard/edit">edit</a>\
 			</div>\
 			{{/tournaments}}\
 		</div>\
@@ -65,95 +67,203 @@ var Dashboard = new Class({
 		</div>\
 	</div>',
 
+	/**
+	 * initialization of dashboard
+	 */
 	init: function() {
 
+		// empty .content object
 		document.body.getElement('.content').empty();
+
+		// show loading
 		document.body.addClass('loading');
 
-		//this.storage.remove('tournaments');
-
-
+		// render Template
 		this.refreshList();
+
+		// remove loading
 		document.body.removeClass('loading');
-
-
 
 	},
 
+	/**
+	 * refresh template
+	 */
 	refreshList: function() {
 
+		// mustache object
 		var obj = {
-			tournaments: this.loadTournaments(),
+			tournaments: this.tournaments.toArray(),
 			noResult: false
 		};
 
+		// if no tournament in list
 		if (0 == obj.tournaments.length) {
 			obj.noResult = true;
 		}
 
+		// get HTML via Mustache
 		var HTML = Mustache.render(this.template, obj);
+
+		// add html
 		document.body.getElement('.content').set('html', HTML);
+
+		// parse template for data.controler
 		Template.parse(document.body.getElement('.content'));
 
 	},
 
+	/**
+	 * action for add tournament, show an input element to add
+	 * a tournament
+	 * @param Object oElement
+	 */
 	addTournamentAction: function(oElement) {
+		// add click event to button
 		oElement.addEvent('click', function() {
+			// get content
 			var oContent = document.getElement('.content');
-			if (oContent.getElement('.dashboard .noResult'))
+
+			// remove "no result" elemnt
+			if (oContent.getElement('.dashboard .noResult')) {
 				oContent.getElement('.dashboard .noResult').addClass('hidden');
+			}
+
+			// show input element
 			oContent.getElement('.dashboard .new').removeClass('hidden');
 			oContent.getElement('.dashboard .new input').focus();
 		});
 	},
 
+	/**
+	 * edit action, hide H§ and show input element to modify tournament name
+	 * @param Object oElement
+	 */
+	editAction: function(oElement) {
+
+		// add click event
+		oElement.addEvent('click', function(oEvent) {
+
+			// get h3
+			var oName = oElement.getParent('.tournament').getElement('h3');
+
+			// get input element;
+			var oInput = oElement.getParent('.tournament').getElement('input');
+
+
+			oName.addClass('hidden');
+			oInput.removeClass('hidden');
+			oInput.focus();
+
+		});
+	},
+
+	/**
+	 * save action to handle new or updates
+	 *
+	 * @param oElement
+	 */
 	saveAction: function(oElement) {
 		oElement.addEvent('keyup', function(oEvent) {
 
+			// on Enter key
 			if (13 == oEvent.code) {
-				var tournaments = this.loadTournaments();
-				var id = tournaments.length + 1;
-				tournaments.unshift({id: id, name: oElement.get('value')});
-				this.storage.set('tournaments', tournaments);
 
-				this.refreshList();
+				// on edit
+				if (null != oElement.get('data-id')) {
 
-			} else if(27 == oEvent.code) {
-				var oContent = document.getElement('.content');
-				if (oContent.getElement('.dashboard .noResult'))
-					oContent.getElement('.dashboard .noResult').removeClass('hidden');
-				oContent.getElement('.dashboard .new').addClass('hidden');
-			}
-		}.bind(this));
-	},
-
-	deleteAction: function(oElement) {
-
-		var id = oElement.get('data-id');
-
-		oElement.addEvent('click', function(oEvent) {
-			oEvent.stopPropagation();
-			oEvent.preventDefault();
-			if (true === confirm('do you really want to delete this tournament including all analysis?')) {
-				var id = oElement.get('data-id');
-
-				var tournaments = this.loadTournaments();
-
-				for(var i = 0; i < tournaments.length; i++) {
-					if (tournaments[i].id == id) {
-						tournaments.erase(tournaments[i]);
+					// get tournament
+					var oTournament = this.tournaments.getById(oElement.get('data-id'));
+					console.log(typeOf(oTournament));
+					if (oTournament) {
+						oTournament.name = oElement.get('value');
 					}
+
+
+				// create new
+				} else {
+					// add tournament on top
+					this.tournaments.add(new Models_Tournament(oElement.get('value')), true);
 				}
 
-				this.storage.set('tournaments', tournaments);
+				// save tournaments
+				this.tournaments.save();
+
+				// refresh list
+				this.refreshList();
+
+			// on escape
+			} else if(27 == oEvent.code) {
+
+				// if in endit mode
+				if (null != oElement.get('data-id')) {
+					// hide input
+					oElement.addClass('hidden');
+
+					// get h3
+					var oH3 = oElement.getParent('.tournament').getElement('h3');
+
+					// restore input valu to h3 value
+					oElement.set('value', oH3.get('html'));
+
+					// show h3
+					oH3.removeClass('hidden');
+
+				// add mode
+				} else {
+					// get content
+					var oContent = document.getElement('.content');
+
+					// show no result
+					if (oContent.getElement('.dashboard .noResult')) {
+						oContent.getElement('.dashboard .noResult').removeClass('hidden');
+					}
+
+					// remove new
+					oContent.getElement('.dashboard .new').addClass('hidden');
+				}
+			}
+		}.bind(this));
+	},
+
+	/**
+	 * delete action, to remove a tournament
+	 * @param oElement
+	 */
+	deleteAction: function(oElement) {
+
+		// get id
+		var id = oElement.get('data-id');
+
+		// add click event
+		oElement.addEvent('click', function(oEvent) {
+			oEvent.stop();
+
+			// ask user
+			if (true === confirm('Do you really want to delete this tournament including all analysis?')) {
+
+				// delete and save
+				this.tournaments.deleteById(id);
+				this.tournaments.save();
+
+				// refresh html
 				this.refreshList();
 			}
 		}.bind(this));
 	},
 
+	/**
+	 * open a tournament
+	 * @param oElement
+	 */
 	openAction: function(oElement) {
+		// add event
 		oElement.addEvent('click', function() {
+
+			// get Application controller
 			var oApplication = this.getController('Application');
+
+			// open tournament controller
 			oApplication.open('Tournament', {id: oElement.get('data-id')});
 		}.bind(this));
 	}

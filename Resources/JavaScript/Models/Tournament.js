@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/JavaScript/Controller.js
+ * @filesource    Resources/JavaScript/Models/Tournament.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -33,35 +33,49 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+var Models_Tournament = new Class({
 
-var Controller = new Class({
+	__class: 'Models_Tournament',
 
-	storage: null,
-	tournaments: null,
+	/**
+	 * id
+	 * @var integer
+	 */
+	id: null,
 
-	initialize: function() {
-		//this.storage = new LocalStorage();
+	/**
+	 * name
+	 * @var string
+	 */
+	name: null,
 
-		this.tournaments = new Collection('tournaments', true);
-	},
+	/**
+	 * teams
+	 * @var Collection
+	 */
+	teams: null,
 
-	getController: function(sController) {
-		if ('class' == typeOf(window[sController])) {
-			window[sController] = new window[sController]();
+	/**
+	 * initialize Tournament Model
+	 * @param string sName
+	 */
+	initialize: function(sName) {
+
+		// set name if defined
+		if (undefined != sName) {
+			this.name = sName;
 		}
 
-		return window[sController];
+		this.__class = 'Models_Tournament';
+
+		// set Team Collection
+		//this.teams = new Collection('teams');
 	},
 
-	loadTournaments: function() {
-		return this.tournaments;
-		/*var tournaments = this.storage.get('tournaments');
-		if (null == tournaments) {
-			tournaments = [];
-		}
-
-		return tournaments;*/
+	__fromJson: function(data) {
+		var oTeams = new Collection('teams');
+		oTeams.data = data.teams.data;
+		oTeams.load();
+		this.teams = oTeams;
 	}
-
-
 });

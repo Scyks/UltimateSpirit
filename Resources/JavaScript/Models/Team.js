@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/JavaScript/Controller.js
+ * @filesource    Resources/JavaScript/Models/Tournament.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -33,35 +33,82 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+var Models_Team = new Class({
 
-var Controller = new Class({
+	__class: 'Models_Team',
+	/**
+	 * id
+	 * @var integer
+	 */
+	id: null,
 
-	storage: null,
-	tournaments: null,
+	/**
+	 * id
+	 * @var integer
+	 */
+	nr: null,
 
-	initialize: function() {
-		//this.storage = new LocalStorage();
+	/**
+	 * name
+	 * @var string
+	 */
+	name: null,
 
-		this.tournaments = new Collection('tournaments', true);
+	/**
+	 * average
+	 * @var integer
+	 */
+	average: 0,
+
+	/**
+	 * rules knowledge
+	 * @var integer
+	 */
+	rules: 0,
+
+	/**
+	 * fouls and body contact
+	 * @var integer
+	 */
+	fouls: 0,
+
+	/**
+	 * fair mindedness
+	 * @var integer
+	 */
+	fair: 0,
+
+	/**
+	 * positive attitude
+	 * @var integer
+	 */
+	attitude: 0,
+
+	/**
+	 * spirit compare
+	 * @var integer
+	 */
+	spirit: 0,
+
+	/**
+	 * array
+	 * @var integer
+	 */
+	results: [],
+
+	/**
+	 * initialize Tournament Model
+	 * @param string sName
+	 */
+	initialize: function(sName) {
+
+		this.__class = 'Models_Team';
+
+		// set name if defined
+		if (undefined != sName) {
+			this.name = sName;
+		}
 	},
 
-	getController: function(sController) {
-		if ('class' == typeOf(window[sController])) {
-			window[sController] = new window[sController]();
-		}
-
-		return window[sController];
-	},
-
-	loadTournaments: function() {
-		return this.tournaments;
-		/*var tournaments = this.storage.get('tournaments');
-		if (null == tournaments) {
-			tournaments = [];
-		}
-
-		return tournaments;*/
-	}
-
-
+	__fromJson: function(data) {}
 });

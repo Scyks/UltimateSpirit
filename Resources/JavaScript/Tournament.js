@@ -48,12 +48,12 @@ var Tournament = new Class({
 			<div class="teams">\
 				<ul>\
 					<li class="headline">\
-						<span class="average">Average</span>\
 						<span class="rules average">Rules Knowledge</span>\
 						<span class="fouls average">Fouls and Contact</span>\
 						<span class="fair average">Fair-Mindedness</span>\
 						<span class="attitude average">Positive Attitude</span>\
 						<span class="spirit average">Our Spirit</span>\
+						<span class="complete average">Average</span>\
 					</li>\
 					<li class="add hidden">\
 						<input name="name" value="" data-controller="Tournament/save" />\
@@ -64,31 +64,47 @@ var Tournament = new Class({
 					</li>\
 					{{/noResult}}\
 					{{#teams}}\
-					<li>\
-						<span class="team">{{nr}}. {{name}}</span>\
-						<span class="complete average">{{average}}</span>\
+					<li class="teams">\
+						<span class="team">\
+							{{nr}}. {{name}}\
+							<a class="button smal delete greyFont">delete</a>\
+							<a class="button edit smal greyFont mRight10">edit</a>\
+						</span>\
 						<span class="rules average">{{rules}}</span>\
 						<span class="fouls average">{{fouls}}</span>\
 						<span class="fair average">{{fair}}</span>\
 						<span class="attitude average">{{attitude}}</span>\
 						<span class="spirit average">{{spirit}}</span>\
+						<span class="complete average">{{average}}</span>\
 					</li>\
 					{{/teams}}\
 				</ul>\
 			</div>\
 		</div>\
 	</div>',
+
+	/**
+	 * tournament id
+	 * @var integer
+	 */
 	id: null,
 
+	/**
+	 * init method
+	 * @param params
+	 */
 	init: function(params) {
 
+		// set tournament id
 		this.id = params.id;
 
+		// empty content and add class loading
 		document.body.getElement('.content').empty();
 		document.body.addClass('loading');
 
-		//this.storage.remove('teams');
+		this.tournament = this.tournaments.getById(this.id);
 
+		// render template and remove loading
 		this.refreshList();
 		document.body.removeClass('loading');
 
@@ -98,70 +114,80 @@ var Tournament = new Class({
 
 	refreshList: function() {
 
-		var aTournaments = this.loadTournaments();
-
-		for(var i = 0; i < aTournaments.length; i++) {
-			if (aTournaments[i].id == this.id) {
-				this.tournament = aTournaments[i];
-				break;
-			}
-		}
-
 		var obj = {
-			name: this.tournament.name
-
+			name: this.tournament.name,
+			teams: this.tournament.teams.toArray(),
+			noResult: false
 		};
 
-		var aTeams = this.loadTeams();
+		if (0 < obj.teams.length) {
+			// sort teams by name
+			obj.teams.sort(function(a, b) {
+				return a.name.localeCompare(b.name)
+			});
 
-		if (undefined == aTeams[this.id] || 0 == aTeams[this.id].length) {
-			obj.noResult = true;
+			// add number to team
+			var idx = 1;
+			obj.teams.each(function(el) {
+				el.nr = idx;
+				idx++;
+			});
 		} else {
-			obj.teams = aTeams[this.id];
+			obj.noResult = true;
 		}
-
-		obj.teams.sort(function(a, b) {
-			return a.name.localeCompare(b.name)
-		});
-
-		var idx = 1;
-		obj.teams.each(function(el) {
-			el.nr = idx;
-			idx++;
-		});
-
+		// render HTML
 		var HTML = Mustache.render(this.template, obj);
 		document.body.getElement('.content').set('html', HTML);
+
+		// Template parse
 		Template.parse(document.body.getElement('.content'));
 
 	},
 
+	/**
+	 * go back to dashboard
+	 * @param Object oElement
+	 */
 	backAction: function(oElement) {
+
+		// click event
 		oElement.addEvent('click', function() {
+			// loadDashboard Controller
 			this.getController('Application').open('Dashboard');
+
 		}.bind(this));
 	},
 
+	// add Team Event
 	addTeamAction: function(oElement) {
+
+		// click event
 		oElement.addEvent('click', function() {
 			var oContent = document.getElement('.content');
+
+			// remove no Result view
 			if (oContent.getElement('.teams .noResult'))
 				oContent.getElement('.teams .noResult').addClass('hidden');
+
+			// show input elemnt
 			oContent.getElement('.teams .add').removeClass('hidden');
 			oContent.getElement('.teams .add input').focus();
 		});
 	},
+
+	/**
+	 * save action
+	 * @param oElement
+	 */
 	saveAction: function(oElement) {
 		oElement.addEvent('keyup', function(oEvent) {
 
 			if (13 == oEvent.code) {
-				var teams = this.loadTeams();
-				if (!teams[this.id]) {
-					teams[this.id] = [];
-				}
-				teams[this.id].unshift({name: oElement.get('value'), nr: 0, average: 0, rules: 0, fouls: 0, fair: 0, attitude: 0, spirit: 0, results: []});
-				this.storage.set('teams', teams);
 
+				this.tournament.teams.add(new Models_Team(oElement.get('value')));
+
+
+				this.tournaments.save();
 				this.refreshList();
 
 			} else if(27 == oEvent.code) {
@@ -171,15 +197,5 @@ var Tournament = new Class({
 				oContent.getElement('.teams .add').addClass('hidden');
 			}
 		}.bind(this));
-	},
-
-	loadTeams: function() {
-		var teams = this.storage.get('teams');
-		if (null == teams) {
-			teams = {};
-		}
-
-		return teams;
 	}
-
 });
