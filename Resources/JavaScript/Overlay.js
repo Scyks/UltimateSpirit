@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/JavaScript/Controller.js
+ * @filesource    Resources/JavaScript/Overlay.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -34,48 +34,45 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-var Controller = new Class({
+var Overlay = new Class({
 
-	/**
-	 * collection of tournaments
-	 * @var Collection
-	 */
-	tournaments: null,
+	backgroundAction: function(oElement) {
 
-	/**
-	 * initialization method - load tournaments
-	 */
-	initialize: function() {
-
-		this.loadTournaments();
+		this.resizeBackground(oElement);
+		window.addEvent('resize', this.resizeBackground.pass(oElement));
 	},
 
-	/**
-	 * will return a controller, if there is an instance of a controller
-	 * this instance will be returned, otherwise a new instance will
-	 * be created and returned
-	 * @param string sController
-	 * @return Controller
-	 */
-	getController: function(sController) {
-		if ('class' == typeOf(window[sController])) {
-			window[sController] = new window[sController]();
+	contentAction: function(oElement) {
+		this.resizeContent(oElement);
+		window.addEvent('resize', this.resizeContent.pass(oElement));
+	},
+
+// pragma mark - resize events
+
+	resizeBackground: function(oElement) {
+
+		var oSize = window.getScrollSize();
+
+		oElement.setStyle('width', oSize.x + 'px');
+		oElement.setStyle('height', oSize.y + 'px');
+
+	},
+
+	resizeContent: function(oElement) {
+		var oSize = window.getSize();
+
+		var oOverlaySize = oElement.getSize();
+
+		var iLeft = (oSize.x / 2 ) - (oOverlaySize.x / 2);
+		if (oOverlaySize.y > oSize.y) {
+			var iTop = 20;
+		} else {
+			var iTop = (oSize.y / 2 ) - (oOverlaySize.y / 2);
 		}
-
-		return window[sController];
-	},
-
-	/**
-	 * load all tournaments from local storage
-	 *
-	 * @return Collection
-	 */
-	loadTournaments: function() {
-		this.tournaments = new Collection('tournaments', true);
-
-		return this.tournaments;
+		alert(iTop + ' ' + oOverlaySize.y + ' ' + oSize.y );
+		oElement.setStyle('left', iLeft + 'px');
+		oElement.setStyle('top', iTop + 'px');
 
 	}
-
 
 });
