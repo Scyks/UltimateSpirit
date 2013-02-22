@@ -69,7 +69,7 @@ var Overlay = new Class({
 		} else {
 			var iTop = (oSize.y / 2 ) - (oOverlaySize.y / 2);
 		}
-		alert(iTop + ' ' + oOverlaySize.y + ' ' + oSize.y );
+
 		oElement.setStyle('left', iLeft + 'px');
 		oElement.setStyle('top', iTop + 'px');
 

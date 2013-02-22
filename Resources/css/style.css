@@ -340,6 +340,32 @@ input {
   left: 0;
   position: absolute;
   top: 20px;
-  width: 500px;
+  min-width: 500px;
   z-index: 20;
+}
+.overlayContent .overlay.spirit svg text {
+  font-size: 43px;
+}
+.overlayContent .overlay.spirit .element {
+  position: absolute;
+}
+.overlayContent .overlay.spirit .element select {
+  background: transparent;
+  width: 145px;
+}
+.overlayContent .overlay.spirit .element.fromTeam {
+  left: 42px;
+  top: 183px;
+}
+.overlayContent .overlay.spirit .element.toTeam {
+  left: 227px;
+  top: 182px;
+  width: 149px;
+  line-height: 12px;
+  word-wrap: break-word;
+  text-align: center;
+}
+.overlayContent .overlay.spirit .element.day {
+  left: 412px;
+  top: 183px;
 }

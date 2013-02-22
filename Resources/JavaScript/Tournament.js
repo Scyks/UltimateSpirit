@@ -103,11 +103,61 @@ var Tournament = new Class({
 		<div class="overlay spirit" data-controller="Overlay/content">\
 			<div class="content">\
 				<h2>{{Title}}</h2>\
-				<svg id="sotg" height="550" width="500" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >\
+				<svg id="sotg" height="850" width="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >\
 					<svg viewBox="0 0 744 1052">\
 						<image x="0" y="0" height="1052" width="744" xlink:href="Resources/images/SOTG_v2010_EN.svg" />\
 					</svg>\
+					\
+					<circle class="rules" cx="320" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="rules" cx="374" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="rules" cx="428" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="rules" cx="482" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="rules" cx="536" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					\
+					<circle class="fouls" cx="320" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fouls" cx="374" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fouls" cx="428" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fouls" cx="482" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fouls" cx="536" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					\
+					<circle class="fair" cx="320" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fair" cx="374" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fair" cx="428" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fair" cx="482" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="fair" cx="536" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					\
+					<circle class="attitude" cx="320" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="attitude" cx="374" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="attitude" cx="428" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="attitude" cx="482" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="attitude" cx="536" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					\
+					<circle class="spirit" cx="320" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="spirit" cx="374" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="spirit" cx="428" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="spirit" cx="482" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					<circle class="spirit" cx="536" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
+					\
+					<text class="1p" x="363" y="723" fill="black">0</text>\
+					<text class="1p" x="417" y="723" fill="black">0</text>\
+					<text class="1p" x="472" y="723" fill="black">0</text>\
+					<text class="1p" x="526" y="723" fill="black">0</text>\
 				</svg>\
+				<div class="element fromTeam">\
+					<select name="fromTeam">\
+						<option>Please Choose</option>\
+						{{#teams}}\
+							<option value="{{id}}">{{name}}</option>\
+						{{/teams}}	\
+					</select>\
+				</div>\
+				<div class="element toTeam">{{toTeam}}</div>\
+				<div class="element day">\
+					<select name="day">\
+						<option value="1">Day 1</option>\
+						<option value="1">Day 2</option>\
+					</select>\
+				</div>\
 			</div>\
 		</div>\
 		',
@@ -368,8 +418,17 @@ var Tournament = new Class({
 		// add click event
 		oElement.addEvent('click', function() {
 
+			aTeams = [];
+			this.tournament.teams.toArray().each(function(el) {
+				if (el.id != id) {
+					aTeams.push(el);
+				}
+			});
+
 			var obj = {
-				Title: 'Add Spirit'
+				Title: 'Add Spirit',
+				toTeam: this.tournament.teams.getById(id).name,
+				teams: aTeams
 			};
 
 			// render HTML

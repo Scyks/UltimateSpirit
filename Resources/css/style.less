@@ -355,11 +355,42 @@ input {
 		left: 0;
 		position: absolute;
 		top: 20px;
-		width: 500px;
+		min-width: 500px;
 		z-index: 20;
 
 		&.spirit {
 			//height: 500px;
+
+			svg text {font-size: 43px;}
+
+			.element {
+				position: absolute;
+
+				select {
+					background: transparent;
+					width: 145px;
+				}
+
+				&.fromTeam {
+					left: 42px;
+					top: 183px;
+
+				}
+
+				&.toTeam {
+					left: 227px;
+					top: 182px;
+					width: 149px;
+					line-height: 12px;
+					word-wrap: break-word;
+					text-align: center;
+				}
+
+				&.day {
+					left: 412px;
+					top: 183px;
+				}
+			}
 		}
 	}
 }
