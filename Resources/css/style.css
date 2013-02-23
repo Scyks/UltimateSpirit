@@ -295,7 +295,7 @@ input {
   display: inline-block;
 }
 .matches .teams li span.team {
-  width: 350px;
+  width: 450px;
 }
 .matches .teams li span.team span {
   cursor: pointer;
@@ -321,7 +321,7 @@ input {
 }
 .matches .teams li.add input {
   margin-bottom: 5px;
-  width: 300px;
+  width: 400px;
 }
 .matches .teams li.headline {
   position: relative;
@@ -345,25 +345,25 @@ input {
   width: 100px;
 }
 .matches .teams li.headline span.matches {
-  left: 355px;
+  left: 455px;
 }
 .matches .teams li.headline span.rules {
-  left: 420px;
-}
-.matches .teams li.headline span.fouls {
-  left: 470px;
-}
-.matches .teams li.headline span.fair {
   left: 520px;
 }
-.matches .teams li.headline span.attitude {
+.matches .teams li.headline span.fouls {
   left: 570px;
 }
-.matches .teams li.headline span.spirit {
+.matches .teams li.headline span.fair {
   left: 620px;
 }
-.matches .teams li.headline span.complete {
+.matches .teams li.headline span.attitude {
   left: 670px;
+}
+.matches .teams li.headline span.spirit {
+  left: 720px;
+}
+.matches .teams li.headline span.complete {
+  left: 770px;
 }
 .overlayContent .overlayBg {
   background: rgba(0, 0, 0, 0.3);

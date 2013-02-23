@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/JavaScript/Application.js
+ * @filesource    Resources/Languages/de-de.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -34,73 +34,37 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-var Application = new Class({
+var locale = 'de-DE';
 
-	Extends: Controller,
-	page: 'Dashboard',
-	params: {},
-	root: null,
+// global defenitions
+Locale.define(locale, 'default', {
+	'title': 'Utlimate Spirit Auswertung',
+	'edit': 'Bearbeiten',
+	'delete': 'Löschen',
+	'back': 'Zurück',
+	'pleaseChoose': 'Bitte auswählen',
+	'cancel': 'Abbechen',
+	'save': 'Speichern'
+});
 
-	initAction: function() {
+// definitions for Dashboard
+Locale.define(locale, 'Dashboard', {
+	'title': 'Turniere',
+	'noResult': 'Bisher wurde kein Turnier angelegt. Du kannst über den Button "Turnier anlegen" auf der rechten Seite ein Turnier anlegen',
+	'addTournament': 'Turnier hinzufügen',
+	'deleteConfirm': 'Willst du dieses Turnier und alle Statistiken wirklich löschen?'
+});
 
-		Locale.use('de-DE');
-		console.log(Locale.list());
-
-		console.log(Locale.get('Dashboard'));
-
-		document.getElement('title').set('html', Locale.get('default.title'));
-		document.getElement('h1').set('html', Locale.get('default.title'));
-
-		var aPages = document.location.href.split('#');
-		this.root = aPages[0];
-
-		if (2 == aPages.length) {
-
-			if (-1 !== aPages[1].indexOf('?')) {
-				var Params = aPages[1].split('?');
-				this.page = Params[0];
-				var aParams = Params[1].split('&');
-				aParams.each(function(param) {
-					keyValue = param.split('=');
-					this.params[keyValue[0]] = keyValue[1];
-				}.bind(this));
-
-			} else {
-				this.page = aPages[1];
-			}
-
-		} else {
-			aPages[1] = this.page;
-			document.location.href = aPages.join('#');
-		}
-
-
-		this.getController(this.page).init(this.params);
-
-
-	},
-
-	open: function(controller, params) {
-		var sUrl = this.root;
-		sUrl += '#' + controller;
-
-		aParams = [];
-		Object.each(params, function(el, key) {
-			aParams.push(key+'='+el);
-		});
-
-		if (0 < aParams.length) {
-			sUrl += '?' + aParams.join('&');
-		}
-
-		document.location.href = sUrl;
-
-	},
-
-	historyAction: function() {
-		window.onpopstate = function() {
-			this.initAction();
-		}.bind(this);
-
-	}
+Locale.define(locale, 'Tournament', {
+	'addTeam': 'Team hinzufügen',
+	'changeTournamentName': 'Zum Ändern des Tunrniernamens kannst du einfach Doppelklicken',
+	'matches': 'Spiele',
+	'rules': 'Regelkenntnis',
+	'fouls': 'Fouls und Kontact',
+	'fair': 'Fair-Mindedness',
+	'attitude': 'Positive Einstellung',
+	'spirit': 'Unser Spirit',
+	'average': 'Durchschnitt',
+	'noResult': 'Es wurde bisher kein Team angelegt. Bitte lege eins an.',
+	'deleteConfirm': 'Willst du das Team inklusive der Statistik wirklich löschen?'
 });

@@ -40,11 +40,11 @@ var Dashboard = new Class({
 	template: '\
 	<div class="dashboard">\
 		<div class="box">\
-			<h2>Tournaments</h2>\
+			<h2>{{_title}}</h2>\
 			\
 			{{#noResult}}\
 			<div class="noResult">\
-				There is no tournament created - please add a tournament using the button on the right side\
+				{{_noResult}}\
 			</div>\
 			{{/noResult}}\
 			\
@@ -56,14 +56,14 @@ var Dashboard = new Class({
 			<div class="tournament">\
 				<h3  data-id="{{id}}" data-controller="Dashboard/open">{{name}}</h3>\
 				<input name="name" data-id="{{id}}" value="{{name}}" class="hidden" data-controller="Dashboard/save" />\
-				<a class="button delete smal greyFont" data-id="{{id}}" data-controller="Dashboard/delete">delete</a>\
-				<a class="button edit smal greyFont mRight10" data-controller="Dashboard/edit">edit</a>\
+				<a class="button delete smal greyFont" data-id="{{id}}" data-controller="Dashboard/delete">{{_delete}}</a>\
+				<a class="button edit smal greyFont mRight10" data-controller="Dashboard/edit">{{_edit}}</a>\
 			</div>\
 			{{/tournaments}}\
 		</div>\
 		\
 		<div class="buttons">\
-			<a class="button" data-controller="Dashboard/addTournament">Add Tournament</a>\
+			<a class="button" data-controller="Dashboard/addTournament">{{_addTournament}}</a>\
 		</div>\
 	</div>',
 
@@ -96,7 +96,12 @@ var Dashboard = new Class({
 		// mustache object
 		var obj = {
 			tournaments: this.tournaments.toArray(),
-			noResult: false
+			noResult: false,
+			_title: Locale.get('Dashboard.title'),
+			_noResult: Locale.get('Dashboard.noResult'),
+			_addTournament: Locale.get('Dashboard.addTournament'),
+			_edit: Locale.get('default.edit'),
+			_delete: Locale.get('default.delete')
 		};
 
 		// if no tournament in list
@@ -242,7 +247,7 @@ var Dashboard = new Class({
 			oEvent.stop();
 
 			// ask user
-			if (true === confirm('Do you really want to delete this tournament including all analysis?')) {
+			if (true === confirm(Locale.get('Dashboard.deleteConfirm'))) {
 
 				// delete and save
 				this.tournaments.deleteById(id);

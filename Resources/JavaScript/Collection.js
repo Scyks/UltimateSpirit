@@ -178,7 +178,7 @@ var Collection = new Class({
 		}
 
 		this.maxId = 0;
-		
+
 		// iterate all objects and create class instances
 		for(var i = 0; i < this.data.length; i++) {
 			var data = this.data[i];

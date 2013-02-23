@@ -58,31 +58,31 @@ var Tournament = new Class({
 	 * @var string
 	 */
 	template: '\
-		<a class="button mBottom10 mRight20" data-controller="Tournament/back">&laquo; back</a>\
-		<a class="button mBottom10" data-controller="Tournament/addTeam">add Team</a>\
+		<a class="button mBottom10 mRight20" data-controller="Tournament/back">&laquo; {{_back}}</a>\
+		<a class="button mBottom10" data-controller="Tournament/addTeam">{{_addTeam}}</a>\
 		\
 		<div class="matches">\
 			<div class="box">\
-				<h2 data-controller="Tournament/changeTitle" title="To change this tournament name use double click.">{{name}}</h2>\
+				<h2 data-controller="Tournament/changeTitle" title="{{_changeTournamentName}}">{{name}}</h2>\
 				<input class="tournament hidden" name="title" value="{{name}}" data-controller="Tournament/changeTitle" />\
 				\
 				<div class="teams">\
 					<ul>\
 						<li class="headline">\
-							<span class="matches average">Matches</span>\
-							<span class="rules average">Rules Knowledge</span>\
-							<span class="fouls average">Fouls and Contact</span>\
-							<span class="fair average">Fair-Mindedness</span>\
-							<span class="attitude average">Positive Attitude</span>\
-							<span class="spirit average">Our Spirit</span>\
-							<span class="complete average">Average</span>\
+							<span class="matches average">{{_matches}}</span>\
+							<span class="rules average">{{_rules}}</span>\
+							<span class="fouls average">{{_fouls}}</span>\
+							<span class="fair average">{{_fair}}</span>\
+							<span class="attitude average">{{_attitude}}</span>\
+							<span class="spirit average">{{_spirit}}</span>\
+							<span class="complete average">{{_average}}</span>\
 						</li>\
 						<li class="add hidden">\
 							<input name="name" value="" data-controller="Tournament/save" />\
 						</li>\
 						{{#noResult}}\
 						<li class="noResult">\
-							There is no Team created yet. Please add a Team.\
+							{{_noResult}}\
 						</li>\
 						{{/noResult}}\
 						{{#teams}}\
@@ -90,8 +90,8 @@ var Tournament = new Class({
 							<span class="team">\
 								<span data-id="{{id}}" data-controller="Tournament/addSpirit">{{nr}}. {{name}}</span>\
 								<input class="hidden" name="name" data-controller="Tournament/save" data-id="{{id}}" value="{{name}}" />\
-								<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">delete</a>\
-								<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">edit</a>\
+								<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">{{_delete}}</a>\
+								<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">{{_edit}}</a>\
 							</span>\
 							<span class="matches mRight15 average">{{matches}}</span>\
 							<span class="rules average">{{rules}}</span>\
@@ -119,7 +119,7 @@ var Tournament = new Class({
 				<a class="button close" data-controller="Overlay/close">X</a>\
 				<svg id="sotg" height="850" width="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >\
 					<svg viewBox="0 0 744 1052">\
-						<image x="0" y="0" height="1052" width="744" xlink:href="Resources/images/SOTG_v2010_EN.svg" />\
+						<image x="0" y="0" height="1052" width="744" xlink:href="Resources/images/SOTG_v2010_{{_lang}}.svg" />\
 					</svg>\
 					\
 					<circle data-category="rules" data-points="0" data-controller="Tournament/setPoints" class="rules" cx="320" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
@@ -181,7 +181,7 @@ var Tournament = new Class({
 				</svg>\
 				<div class="element fromTeam">\
 					<select name="fromTeam" class="fromTeam error" data-controller="Tournament/selectTeam">\
-						<option value="">Please Choose</option>\
+						<option value="">{{_pleaseChoose}}</option>\
 						{{#teams}}\
 							<option value="{{id}}">{{name}}</option>\
 						{{/teams}}	\
@@ -195,8 +195,8 @@ var Tournament = new Class({
 					</select>\
 				</div>\
 				\
-				<a class="button element save orange" data-id="{{toTeamId}}" data-controller="Tournament/saveSpirit">Save</a>\
-				<a class="button element cancel" data-controller="Overlay/close">Cancel</a>\
+				<a class="button element save orange" data-id="{{toTeamId}}" data-controller="Tournament/saveSpirit">{{_save}}</a>\
+				<a class="button element cancel" data-controller="Overlay/close">{{_cancel}}</a>\
 			</div>\
 		</div>\
 		',
@@ -231,12 +231,27 @@ var Tournament = new Class({
 
 	refreshList: function() {
 
+
 		var obj = {
+			_edit: Locale.get('default.edit'),
+			_delete: Locale.get('default.delete'),
+			_back: Locale.get('default.back'),
+			_addTeam: Locale.get('Tournament.addTeam'),
+			_changeTournamentName: Locale.get('Tournament.changeTournamentName'),
+			_matches: Locale.get('Tournament.matches'),
+			_rules: Locale.get('Tournament.rules'),
+			_fouls: Locale.get('Tournament.fouls'),
+			_fair: Locale.get('Tournament.fair'),
+			_attitude: Locale.get('Tournament.attitude'),
+			_spirit: Locale.get('Tournament.spirit'),
+			_average: Locale.get('Tournament.average'),
+			_noResult: Locale.get('Tournament.noResult'),
+
 			name: this.tournament.name,
 			teams: this.tournament.teams.toArray(),
 			noResult: false
 		};
-		console.log(this.tournament);
+
 		if (0 < obj.teams.length) {
 			// sort teams by name
 			obj.teams.sort(function(a, b) {
@@ -438,7 +453,7 @@ var Tournament = new Class({
 			oEvent.stop();
 
 			// ask user
-			if (true === confirm('Do you really want to delete this team including all analysis?')) {
+			if (true === confirm(Locale.get('Tournament.deleteConfirm'))) {
 
 				// delete and save
 				this.tournament.teams.deleteById(id);
@@ -485,6 +500,11 @@ var Tournament = new Class({
 			var oCurrentTeam = this.tournament.teams.getById(id);
 			// template vars
 			var obj = {
+				_pleaseChoose: Locale.get('default.pleaseChoose'),
+				_cancel: Locale.get('default.save'),
+				_save: Locale.get('default.cancel'),
+				_lang: (('de-de' == Locale.getCurrent().name) ? 'DE' : 'EN'),
+
 				toTeam: oCurrentTeam.name,
 				toTeamId: oCurrentTeam.id,
 				teams: aTeams
