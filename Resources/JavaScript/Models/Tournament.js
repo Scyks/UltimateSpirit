@@ -68,14 +68,15 @@ var Models_Tournament = new Class({
 
 		this.__class = 'Models_Tournament';
 
-		// set Team Collection
-		//this.teams = new Collection('teams');
 	},
 
 	__fromJson: function(data) {
 		var oTeams = new Collection('teams');
-		oTeams.data = data.teams.data;
-		oTeams.load();
+		if (data.teams) {
+			oTeams.data = data.teams.data;
+			oTeams.load();
+		}
 		this.teams = oTeams;
+
 	}
 });

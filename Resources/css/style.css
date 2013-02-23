@@ -64,6 +64,18 @@ body .loading {
 svg#sotg {
   background: white;
 }
+.mBottom10 {
+  margin-bottom: 10px !important;
+}
+.mRight10 {
+  margin-right: 10px !important;
+}
+.mRight15 {
+  margin-right: 15px !important;
+}
+.mRight20 {
+  margin-right: 20px !important;
+}
 .button {
   background: #111;
   border-radius: 5px;
@@ -103,15 +115,6 @@ svg#sotg {
 
   color: #FFF;
 }
-.button.mBottom10 {
-  margin-bottom: 10px !important;
-}
-.button.mRight20 {
-  margin-right: 20px !important;
-}
-.button.mRight10 {
-  margin-right: 10px !important;
-}
 .button.smal {
   border: none;
   font-size: 12px;
@@ -146,6 +149,35 @@ svg#sotg {
   /* W3C */
 
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#a90329', endColorstr='#6d0019', GradientType=0);
+  /* IE6-9 */
+
+}
+.button.orange {
+  background: #ff670f;
+}
+.button.orange:hover {
+  background: #ffa84c;
+  /* Old browsers */
+
+  background: -moz-linear-gradient(top, #ffa84c 0%, #ff7b0d 100%);
+  /* FF3.6+ */
+
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffa84c), color-stop(100%, #ff7b0d));
+  /* Chrome,Safari4+ */
+
+  background: -webkit-linear-gradient(top, #ffa84c 0%, #ff7b0d 100%);
+  /* Chrome10+,Safari5.1+ */
+
+  background: -o-linear-gradient(top, #ffa84c 0%, #ff7b0d 100%);
+  /* Opera 11.10+ */
+
+  background: -ms-linear-gradient(top, #ffa84c 0%, #ff7b0d 100%);
+  /* IE10+ */
+
+  background: linear-gradient(to bottom, #ffa84c 0%, #ff7b0d 100%);
+  /* W3C */
+
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffa84c', endColorstr='#ff7b0d', GradientType=0);
   /* IE6-9 */
 
 }
@@ -297,6 +329,10 @@ input {
 }
 .matches .teams li.headline span {
   transform: rotate(320deg) scale(1.05) skew(-13deg) translate(42px);
+  -ms-transform: rotate(320deg) scale(1.05) skew(-13deg) translate(42px);
+  -moz-transform: rotate(320deg) scale(1.05) skew(-13deg) translate(42px);
+  -webkit-transform: rotate(320deg) scale(1.05) skew(-13deg) translate(42px);
+  -o-transform: rotate(320deg) scale(1.05) skew(-13deg) translate(42px);
   bottom: 10px;
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
   border-right: 0px;
@@ -308,23 +344,26 @@ input {
   position: absolute;
   width: 100px;
 }
-.matches .teams li.headline span.complete {
-  left: 605px;
-}
-.matches .teams li.headline span.rules {
+.matches .teams li.headline span.matches {
   left: 355px;
 }
+.matches .teams li.headline span.rules {
+  left: 420px;
+}
 .matches .teams li.headline span.fouls {
-  left: 405px;
+  left: 470px;
 }
 .matches .teams li.headline span.fair {
-  left: 455px;
+  left: 520px;
 }
 .matches .teams li.headline span.attitude {
-  left: 505px;
+  left: 570px;
 }
 .matches .teams li.headline span.spirit {
-  left: 555px;
+  left: 620px;
+}
+.matches .teams li.headline span.complete {
+  left: 670px;
 }
 .overlayContent .overlayBg {
   background: rgba(0, 0, 0, 0.3);
@@ -335,7 +374,6 @@ input {
   z-index: 10;
 }
 .overlayContent .overlay {
-  background: white;
   display: block;
   left: 0;
   position: absolute;
@@ -343,23 +381,44 @@ input {
   min-width: 500px;
   z-index: 20;
 }
+.overlayContent .overlay a.close {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+  pading: 2px 5px;
+}
+.overlayContent .overlay.spirit .content {
+  background: white;
+  margin-bottom: 20px;
+}
 .overlayContent .overlay.spirit svg text {
-  font-size: 43px;
+  font-size: 21px;
+}
+.overlayContent .overlay.spirit svg text.sum {
+  font-size: 40px;
+}
+.overlayContent .overlay.spirit svg circle {
+  cursor: pointer;
 }
 .overlayContent .overlay.spirit .element {
   position: absolute;
+  font-size: 16px;
 }
 .overlayContent .overlay.spirit .element select {
-  background: transparent;
+  padding: 5px;
   width: 145px;
+  font-size: 16px;
+}
+.overlayContent .overlay.spirit .element select.error {
+  background: #ff8551;
 }
 .overlayContent .overlay.spirit .element.fromTeam {
   left: 42px;
-  top: 183px;
+  top: 162px;
 }
 .overlayContent .overlay.spirit .element.toTeam {
   left: 227px;
-  top: 182px;
+  top: 166px;
   width: 149px;
   line-height: 12px;
   word-wrap: break-word;
@@ -367,5 +426,13 @@ input {
 }
 .overlayContent .overlay.spirit .element.day {
   left: 412px;
-  top: 183px;
+  top: 162px;
+}
+.overlayContent .overlay.spirit .element.save {
+  left: 450px;
+  top: 770px;
+}
+.overlayContent .overlay.spirit .element.cancel {
+  left: 60px;
+  top: 770px;
 }

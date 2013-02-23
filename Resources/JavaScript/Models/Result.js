@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/JavaScript/Models/Tournament.js
+ * @filesource    Resources/JavaScript/Models/Result.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -33,9 +33,9 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-var Models_Team = new Class({
+var Models_Result = new Class({
 
-	__class: 'Models_Team',
+	__class: 'Models_Result',
 	/**
 	 * id
 	 * @var integer
@@ -43,22 +43,22 @@ var Models_Team = new Class({
 	id: null,
 
 	/**
-	 * id
+	 * from Team
 	 * @var integer
 	 */
-	nr: null,
+	fromTeam: null,
 
 	/**
-	 * name
+	 * from Team
+	 * @var integer
+	 */
+	toTeam: null,
+
+	/**
+	 * day
 	 * @var string
 	 */
-	name: null,
-
-	/**
-	 * count of matches
-	 * @var integer
-	 */
-	matches: 0,
+	day: null,
 
 	/**
 	 * average
@@ -97,70 +97,14 @@ var Models_Team = new Class({
 	spirit: 0,
 
 	/**
-	 * results
-	 * @var Collection
-	 */
-	results: null,
-
-	/**
 	 * initialize Tournament Model
 	 * @param string sName
 	 */
-	initialize: function(sName) {
+	initialize: function() {
 
-		this.__class = 'Models_Team';
+		this.__class = 'Models_Result';
 
-		// set name if defined
-		if (undefined != sName) {
-			this.name = sName;
-		}
-
-		this.results = new Collection('results');
 	},
 
-	/**
-	 * this method will calculate all averages by given
-	 * results.
-	 */
-	calculateAverages: function() {
-
-		// reset Team data
-		this.matches = 0;
-		this.average = 0;
-		this.rules = 0;
-		this.fouls = 0;
-		this.fair = 0;
-		this.attitude = 0;
-		this.spirit = 0;
-
-		// iterate all result data
-		this.results.toArray().each(function(oData) {
-
-			this.matches += 1;
-			this.average += oData.average;
-			this.rules += oData.rules;
-			this.fouls += oData.fouls;
-			this.fair += oData.fair;
-			this.attitude += oData.attitude;
-			this.spirit += oData.spirit;
-
-		}.bind(this));
-
-		// calculate real averages
-		this.average  = Math.round((this.average / this.matches) * 100) / 100;
-		this.rules    = Math.round((this.rules / this.matches) * 100) / 100;
-		this.fouls    = Math.round((this.fouls / this.matches) * 100) / 100;
-		this.fair     = Math.round((this.fair / this.matches) * 100) / 100;
-		this.attitude = Math.round((this.attitude / this.matches) * 100) / 100;
-		this.spirit   = Math.round((this.spirit / this.matches) * 100) / 100;
-	},
-	
-	__fromJson: function(data) {
-		var oResults = new Collection('results');
-		if (data.results) {
-			oResults.data = data.results.data;
-			oResults.load();
-		}
-		this.results = oResults;
-	}
+	__fromJson: function(data) {}
 });

@@ -35,8 +35,6 @@
  */
 var Collection = new Class({
 
-	$class: 'Collection',
-
 	/**
 	 * contains collection data
 	 */
@@ -179,6 +177,8 @@ var Collection = new Class({
 			this.data = [];
 		}
 
+		this.maxId = 0;
+		
 		// iterate all objects and create class instances
 		for(var i = 0; i < this.data.length; i++) {
 			var data = this.data[i];
@@ -193,10 +193,16 @@ var Collection = new Class({
 				oClass.__fromJson(data);
 
 				this.data[i] = oClass;
+
+				// max ID
+				if (this.maxId < oClass.id) {
+					this.maxId = oClass.id;
+				}
 			}
+
 		}
 
-		this.maxId = this.data.length + 1;
+		this.maxId += 1;
 	},
 
 	/**

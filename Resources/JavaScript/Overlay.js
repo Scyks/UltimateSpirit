@@ -73,6 +73,17 @@ var Overlay = new Class({
 		oElement.setStyle('left', iLeft + 'px');
 		oElement.setStyle('top', iTop + 'px');
 
+	},
+
+	/**
+	 * this action remove overlay from Dom element
+	 *
+	 * @param oElement
+	 */
+	closeAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			document.getElement('div.overlayContent').empty();
+		});
 	}
 
 });

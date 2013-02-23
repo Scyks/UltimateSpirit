@@ -36,6 +36,10 @@
 
 .transform(@deg: -45deg, @translate: 42px) {
 	transform: rotate(@deg) scale(1.05) skew(-13deg) translate(@translate);
+	-ms-transform: rotate(@deg) scale(1.05) skew(-13deg) translate(@translate);
+	-moz-transform: rotate(@deg) scale(1.05) skew(-13deg) translate(@translate);
+	-webkit-transform: rotate(@deg) scale(1.05) skew(-13deg) translate(@translate);
+	-o-transform: rotate(@deg) scale(1.05) skew(-13deg) translate(@translate);
 }
 
 * {
@@ -74,6 +78,12 @@ body {
 
 svg#sotg {background: white;}
 
+.m {
+	&Bottom10 {margin-bottom: 10px !important;}
+	&Right10 {margin-right: 10px !important;}
+	&Right15 {margin-right: 15px !important;}
+	&Right20 {margin-right: 20px !important;}
+}
 .button {
 	background: #111;
 	//border: 1px solid #000;
@@ -100,15 +110,6 @@ svg#sotg {background: white;}
 		color: #FFF;
 	}
 
-	&.mBottom10 {
-		margin-bottom: 10px !important;
-	}
-	&.mRight20 {
-		margin-right: 20px !important;
-	}
-	&.mRight10 {
-		margin-right: 10px !important;
-	}
 	&.smal {
 		border: none;
 		font-size: 12px;
@@ -130,6 +131,20 @@ svg#sotg {background: white;}
 		background: -ms-linear-gradient(top, #a90329 0%,#8f0222 44%,#6d0019 100%); /* IE10+ */
 		background: linear-gradient(to bottom, #a90329 0%,#8f0222 44%,#6d0019 100%); /* W3C */
 		filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#a90329', endColorstr='#6d0019',GradientType=0 ); /* IE6-9 */
+	}
+	&.orange {
+		background: #ff670f;
+
+		&:hover {
+			background: #ffa84c; /* Old browsers */
+			background: -moz-linear-gradient(top,  #ffa84c 0%, #ff7b0d 100%); /* FF3.6+ */
+			background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#ffa84c), color-stop(100%,#ff7b0d)); /* Chrome,Safari4+ */
+			background: -webkit-linear-gradient(top,  #ffa84c 0%,#ff7b0d 100%); /* Chrome10+,Safari5.1+ */
+			background: -o-linear-gradient(top,  #ffa84c 0%,#ff7b0d 100%); /* Opera 11.10+ */
+			background: -ms-linear-gradient(top,  #ffa84c 0%,#ff7b0d 100%); /* IE10+ */
+			background: linear-gradient(to bottom,  #ffa84c 0%,#ff7b0d 100%); /* W3C */
+			filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffa84c', endColorstr='#ff7b0d',GradientType=0 ); /* IE6-9 */
+		}
 	}
 
 }
@@ -324,12 +339,14 @@ input {
 					position: absolute;
 					width: 100px;
 
-					&.complete {left: 605px;}
-					&.rules {left: 355px;}
-					&.fouls {left: 405px;}
-					&.fair {left: 455px;}
-					&.attitude {left: 505px;}
-					&.spirit {left: 555px;}
+
+					&.matches {left: 355px;}
+					&.rules {left: 420px;}
+					&.fouls {left: 470px;}
+					&.fair {left: 520px;}
+					&.attitude {left: 570px;}
+					&.spirit {left: 620px;}
+					&.complete {left: 670px;}
 				}
 
 			}
@@ -350,7 +367,6 @@ input {
 	}
 
 	.overlay {
-		background: white;
 		display: block;
 		left: 0;
 		position: absolute;
@@ -358,28 +374,54 @@ input {
 		min-width: 500px;
 		z-index: 20;
 
+		a.close {
+			position: absolute;
+			right: 10px;
+			top: 10px;
+			pading: 2px 5px;
+		}
+
 		&.spirit {
 			//height: 500px;
 
-			svg text {font-size: 43px;}
+			.content {
+				background: white;
+				margin-bottom: 20px;
+			}
+
+			svg {
+				text {
+					font-size: 21px;
+
+					&.sum {
+						font-size: 40px;
+					}
+				}
+				circle {cursor: pointer;}
+			}
 
 			.element {
 				position: absolute;
+				font-size: 16px;
 
 				select {
-					background: transparent;
+					padding: 5px;
 					width: 145px;
+					font-size: 16px;
+					&.error {
+						background: #ff8551;
+					}
 				}
 
 				&.fromTeam {
 					left: 42px;
-					top: 183px;
+					top: 162px;
 
 				}
 
 				&.toTeam {
 					left: 227px;
-					top: 182px;
+					top: 166px;
 					width: 149px;
 					line-height: 12px;
 					word-wrap: break-word;
@@ -388,7 +430,16 @@ input {
 
 				&.day {
 					left: 412px;
-					top: 183px;
+					top: 162px;
+				}
+
+				&.save {
+					left: 450px;
+					top: 770px;
+				}
+				&.cancel {
+					left: 60px;
+					top: 770px;
 				}
 			}
 		}
