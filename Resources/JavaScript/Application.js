@@ -41,13 +41,19 @@ var Application = new Class({
 	params: {},
 	root: null,
 
+	/**
+	 * Init Application
+	 */
 	initAction: function() {
 
+		// @TODO Settings
 		Locale.use('de-DE');
 
+		// set title by language
 		document.getElement('title').set('html', Locale.get('default.title'));
 		document.getElement('h1').set('html', Locale.get('default.title'));
 
+		// get current controller
 		var aPages = document.location.href.split('#');
 		this.root = aPages[0];
 
@@ -71,12 +77,25 @@ var Application = new Class({
 			document.location.href = aPages.join('#');
 		}
 
+		var oController = this.getController(this.page);
 
-		this.getController(this.page).init(this.params);
+		// if no controller found - show dashboard
+		if (!oController) {
+			aPages[1] = 'Dashboard';
+			this.page = 'Dashboard';
+			document.location.href = aPages.join('#');
+			var oController = this.getController(this.page);
+		}
+		oController.init(this.params);
 
 
 	},
 
+	/**
+	 * this method opens a controller page
+	 * @param string controller
+	 * @param object params
+	 */
 	open: function(controller, params) {
 		var sUrl = this.root;
 		sUrl += '#' + controller;
@@ -94,6 +113,9 @@ var Application = new Class({
 
 	},
 
+	/**
+	 * store history to use back and forward buttons of browser
+	 */
 	historyAction: function() {
 		window.onpopstate = function() {
 			this.initAction();
