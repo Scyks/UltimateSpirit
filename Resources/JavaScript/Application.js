@@ -44,9 +44,6 @@ var Application = new Class({
 	initAction: function() {
 
 		Locale.use('de-DE');
-		console.log(Locale.list());
-
-		console.log(Locale.get('Dashboard'));
 
 		document.getElement('title').set('html', Locale.get('default.title'));
 		document.getElement('h1').set('html', Locale.get('default.title'));

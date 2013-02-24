@@ -181,6 +181,13 @@ svg#sotg {
   /* IE6-9 */
 
 }
+.button.cancelEdit {
+  border-radius: 0px 5px 5px 0px;
+  font-size: 16px;
+  height: 20px;
+  padding: 5px 10px;
+  position: absolute;
+}
 .box {
   background: rgba(20, 20, 20, 0.5);
   border-radius: 5px;
@@ -242,19 +249,23 @@ input {
   color: #666;
 }
 .dashboard .tournament {
-  display: block;
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
-  padding: 10px 10px;
-  clear: both;
-  overflow: hidden;
   border-radius: 5px;
+  clear: both;
+  display: block;
+  overflow: hidden;
+  padding: 10px 10px;
+  position: relative;
 }
 .dashboard .tournament:hover {
   background-color: rgba(50, 50, 50, 0.5);
 }
-.dashboard .tournament:hover a {
+.dashboard .tournament:hover div.buttons a {
   display: block;
   float: right;
+}
+.dashboard .tournament:hover div.edit.active + div.buttons {
+  display: none;
 }
 .dashboard .tournament:last-child {
   border: none;
@@ -267,17 +278,33 @@ input {
 }
 .dashboard .tournament input {
   float: left;
-  width: 270px;
+  width: 370px;
 }
-.dashboard .tournament a {
+.dashboard .tournament div.edit a {
+  right: 5px;
+  top: 9px;
+}
+.dashboard .tournament div.buttons {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+.dashboard .tournament div.buttons a {
   float: right;
   display: none;
 }
 .dashboard .tournament.new input {
   width: 387px;
 }
-.matches input.tournament {
-  width: 300px;
+.matches div.edit {
+  position: relative;
+}
+.matches div.edit input {
+  width: 380px;
+}
+.matches div.edit a {
+  top: 0px;
+  left: 390px;
 }
 .matches .teams li {
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
@@ -288,7 +315,10 @@ input {
 .matches .teams li.teams:hover {
   background-color: rgba(50, 50, 50, 0.5);
 }
-.matches .teams li.teams:hover span.team a {
+.matches .teams li.teams:hover div.edit.active + div.buttons {
+  display: none;
+}
+.matches .teams li.teams:hover span.team div.buttons a {
   display: block;
 }
 .matches .teams li span {
@@ -296,15 +326,24 @@ input {
 }
 .matches .teams li span.team {
   width: 450px;
+  position: relative;
 }
 .matches .teams li span.team span {
   cursor: pointer;
 }
-.matches .teams li span.team input {
+.matches .teams li span.team div.edit input {
   float: left;
-  width: 200px;
+  width: 380px;
 }
-.matches .teams li span.team a {
+.matches .teams li span.team div.edit a {
+  left: 390px;
+}
+.matches .teams li span.team div.buttons {
+  left: 290px;
+  position: absolute;
+  top: 2px;
+}
+.matches .teams li span.team div.buttons a {
   float: right;
   display: none;
 }
@@ -319,9 +358,16 @@ input {
 .matches .teams li:last-child {
   border: none;
 }
+.matches .teams li.add {
+  position: relative;
+}
 .matches .teams li.add input {
   margin-bottom: 5px;
   width: 400px;
+}
+.matches .teams li.add a {
+  top: 5px;
+  left: 395px;
 }
 .matches .teams li.headline {
   position: relative;

@@ -147,6 +147,14 @@ svg#sotg {background: white;}
 		}
 	}
 
+	&.cancelEdit {
+		border-radius: 0px 5px 5px 0px;
+		font-size: 16px;
+		height: 20px;
+		padding: 5px 10px;
+		position: absolute;
+	}
+
 }
 
 .box {
@@ -221,18 +229,26 @@ input {
 		color: #666;
 	}
 	.tournament {
-		display: block;
 		border-bottom: 1px solid rgba(125, 125, 125, 0.3);
-		padding: 10px 10px;
-		clear: both;
-		overflow: hidden;
 		border-radius: 5px;
+		clear: both;
+		display: block;
+		overflow: hidden;
+		padding: 10px 10px;
+		position: relative;
+
 		&:hover {
 			background-color: rgba(50, 50, 50, 0.5);
 
-			a {
-				display:block;
-				float: right;
+			div.buttons {
+				a {
+					display:block;
+					float: right;
+				}
+			}
+
+			div.edit.active + div.buttons {
+				display:none;
 			}
 		}
 		&:last-child {
@@ -247,11 +263,25 @@ input {
 		}
 		input {
 			float:left;
-			width: 270px;
+			width: 370px;
 		}
-		a {
-			float:right;
-			display:none;
+
+		div.edit {
+
+			a {
+				right: 5px;
+				top: 9px;
+			}
+		}
+
+		div.buttons {
+			position: absolute;
+			right: 5px;
+			top: 5px;
+			a {
+				float:right;
+				display:none;
+			}
 		}
 
 		&.new {
@@ -266,8 +296,17 @@ input {
 
 .matches {
 
-	input.tournament {
-		width: 300px;
+	div.edit {
+		position: relative;
+
+		input {
+			width: 380px;
+		}
+
+		a {
+			top: 0px;
+			left:  390px;
+		}
 	}
 
 	.teams {
@@ -279,25 +318,38 @@ input {
 
 			&.teams:hover {
 				background-color: rgba(50, 50, 50, 0.5);
+				div.edit.active + div.buttons {display:none;}
 			}
-			&.teams:hover span.team a {display:block;}
+			&.teams:hover span.team div.buttons a {display:block;}
 			span {
 				display: inline-block;
 
 				&.team {
 					width: 450px;
+					position: relative;
 
 					span {
 						cursor: pointer;
 					}
+					div.edit {
+						input {
+							float: left;
+							width: 380px;
+						}
 
-					input {
-						float: left;
-						width: 200px;
+						a {
+							left: 390px;
+						}
 					}
-					a {
-						float:right;
-						display:none;
+					div.buttons {
+						left: 290px;
+						position: absolute;
+						top: 2px;
+
+						a {
+							float:right;
+							display:none;
+						}
 					}
 				}
 				&.average {
@@ -315,9 +367,16 @@ input {
 			}
 
 			&.add {
+				position: relative;
+
 				input {
 					margin-bottom: 5px;
 					width: 400px;
+				}
+
+				a {
+					top: 5px;
+					left: 395px;
 				}
 			}
 

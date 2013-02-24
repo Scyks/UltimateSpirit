@@ -55,9 +55,14 @@ var Dashboard = new Class({
 			{{#tournaments}}\
 			<div class="tournament">\
 				<h3  data-id="{{id}}" data-controller="Dashboard/open">{{name}}</h3>\
-				<input name="name" data-id="{{id}}" value="{{name}}" class="hidden" data-controller="Dashboard/save" />\
-				<a class="button delete smal greyFont" data-id="{{id}}" data-controller="Dashboard/delete">{{_delete}}</a>\
-				<a class="button edit smal greyFont mRight10" data-controller="Dashboard/edit">{{_edit}}</a>\
+				<div class="edit hidden">\
+					<input name="name" data-id="{{id}}" value="{{name}}" data-controller="Dashboard/save" />\
+					<a class="button cancelEdit delete" data-controller="Dashboard/cancelEdit">X</a>\
+				</div>\
+				<div class="buttons">\
+					<a class="button delete smal greyFont" data-id="{{id}}" data-controller="Dashboard/delete">{{_delete}}</a>\
+					<a class="button edit smal greyFont mRight10" data-controller="Dashboard/edit">{{_edit}}</a>\
+				</div>\
 			</div>\
 			{{/tournaments}}\
 		</div>\
@@ -155,13 +160,38 @@ var Dashboard = new Class({
 			var oName = oElement.getParent('.tournament').getElement('h3');
 
 			// get input element;
-			var oInput = oElement.getParent('.tournament').getElement('input');
+			var oEdit = oElement.getParent('.tournament').getElement('div.edit');
 
 
 			oName.addClass('hidden');
-			oInput.removeClass('hidden');
-			oInput.focus();
+			oEdit.removeClass('hidden');
+			oEdit.addClass('active');
+			oEdit.getElement('input').focus();
 
+		});
+	},
+
+	/**
+	 * cancel edit element
+	 * @param oElement
+	 */
+	cancelEditAction: function(oElement) {
+
+		var oEdit = oElement.getParent('div.edit');
+
+		oElement.addEvent('click', function() {
+			// hide edit
+			oEdit.addClass('hidden');
+			oEdit.removeClass('active');
+
+			// get h3
+			var oH3 = oElement.getParent('div.tournament').getElement('h3');
+
+			// restore input valu to h3 value
+			oEdit.getElement('input').set('value', oH3.get('html'));
+
+			// show h3
+			oH3.removeClass('hidden');
 		});
 	},
 
@@ -205,7 +235,8 @@ var Dashboard = new Class({
 				// if in endit mode
 				if (null != oElement.get('data-id')) {
 					// hide input
-					oElement.addClass('hidden');
+					oElement.getParent('div.edit').addClass('hidden');
+					oElement.getParent('div.edit').removeClass('active');
 
 					// get h3
 					var oH3 = oElement.getParent('.tournament').getElement('h3');

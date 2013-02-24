@@ -64,7 +64,10 @@ var Tournament = new Class({
 		<div class="matches">\
 			<div class="box">\
 				<h2 data-controller="Tournament/changeTitle" title="{{_changeTournamentName}}">{{name}}</h2>\
-				<input class="tournament hidden" name="title" value="{{name}}" data-controller="Tournament/changeTitle" />\
+				<div class="edit hidden">\
+					<input class="tournament" name="title" value="{{name}}" data-controller="Tournament/changeTitle" />\
+					<a class="button cancelEdit delete" data-controller="Tournament/cancelChangeTitle">X</a>\
+				</div>\
 				\
 				<div class="teams">\
 					<ul>\
@@ -79,6 +82,7 @@ var Tournament = new Class({
 						</li>\
 						<li class="add hidden">\
 							<input name="name" value="" data-controller="Tournament/save" />\
+							<a class="button cancelEdit delete" data-controller="Tournament/cancelEdit">X</a>\
 						</li>\
 						{{#noResult}}\
 						<li class="noResult">\
@@ -89,9 +93,14 @@ var Tournament = new Class({
 						<li class="teams">\
 							<span class="team">\
 								<span data-id="{{id}}" data-controller="Tournament/addSpirit">{{nr}}. {{name}}</span>\
-								<input class="hidden" name="name" data-controller="Tournament/save" data-id="{{id}}" value="{{name}}" />\
-								<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">{{_delete}}</a>\
-								<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">{{_edit}}</a>\
+								<div class="edit hidden">\
+									<input name="name" data-controller="Tournament/save" data-id="{{id}}" value="{{name}}" />\
+									<a class="button cancelEdit delete" data-controller="Tournament/cancelEdit">X</a>\
+								</div>\
+								<div class="buttons">\
+									<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">{{_delete}}</a>\
+									<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">{{_edit}}</a>\
+								</div>\
 							</span>\
 							<span class="matches mRight15 average">{{matches}}</span>\
 							<span class="rules average">{{rules}}</span>\
@@ -298,6 +307,19 @@ var Tournament = new Class({
 
 //pragma mark - tournament modification
 
+	cancelChangeTitleAction: function(oElement) {
+		var oParent = oElement.getParent('.box');
+		var oEdit = oElement.getParent('div.edit');
+
+		oElement.addEvent('click', function() {
+			// restore input value
+			oEdit.set('value', oParent.getElement('h2').get('html'));
+
+			// hide input, show h2
+			oEdit.addClass('hidden');
+			oParent.getElement('h2').removeClass('hidden');
+		});
+	},
 	/**
 	 * edit tournament name
 	 * @param Object oElement h2 or input element
@@ -313,8 +335,8 @@ var Tournament = new Class({
 			oElement.addEvent('dblclick', function() {
 
 				// hide h2 and show input element
-				oParent.getElement('input').removeClass('hidden');
-				oParent.getElement('input').focus();
+				oParent.getElement('div.edit').removeClass('hidden');
+				oParent.getElement('div.edit input').focus();
 
 				oElement.addClass('hidden');
 			});
@@ -350,6 +372,40 @@ var Tournament = new Class({
 	},
 
 //pragma mark - team modification
+
+	cancelEditAction: function(oElement) {
+
+		var oEdit = oElement.getParent('div');
+
+		oElement.addEvent('click', function() {
+			// on edit
+			if (null != oEdit.getElement('input').get('data-id')) {
+
+
+				var oTeam = this.tournament.teams.getById(oEdit.getElement('input').get('data-id'));
+				if (oTeam) {
+					// restore input value
+					oEdit.getElement('input').set('value', oTeam.name);
+				}
+				// hide input
+				oEdit.addClass('hidden');
+				oEdit.removeClass('active');
+
+				// get span
+				var oSpan = oEdit.getParent('span.team').getElement('span');
+
+				// show span
+				oSpan.removeClass('hidden');
+			} else {
+				oEdit.getElement('input').set('value', null);
+
+				var oContent = document.getElement('.content');
+				if (oContent.getElement('.teams .noResult'))
+					oContent.getElement('.teams .noResult').removeClass('hidden');
+				oContent.getElement('.teams .add').addClass('hidden');
+			}
+		}.bind(this));
+	},
 
 	/**
 	 * save action
@@ -393,6 +449,7 @@ var Tournament = new Class({
 					// show span
 					oSpan.removeClass('hidden');
 				} else {
+					oElement.set('value', null);
 					var oContent = document.getElement('.content');
 					if (oContent.getElement('.teams .noResult'))
 						oContent.getElement('.teams .noResult').removeClass('hidden');
@@ -429,11 +486,12 @@ var Tournament = new Class({
 		// add click event
 		oElement.addEvent('click', function() {
 			// et Parent
-			var oParent = oElement.getParent();
+			var oParent = oElement.getParent('span.team');
 
 			// show input hide span
 			oParent.getElement('span').addClass('hidden');
-			oParent.getElement('input').removeClass('hidden');
+			oParent.getElement('div.edit').removeClass('hidden');
+			oParent.getElement('div.edit').addClass('active');
 			oParent.getElement('input').focus();
 		});
 	},
@@ -503,7 +561,7 @@ var Tournament = new Class({
 				_pleaseChoose: Locale.get('default.pleaseChoose'),
 				_cancel: Locale.get('default.save'),
 				_save: Locale.get('default.cancel'),
-				_lang: (('de-de' == Locale.getCurrent().name) ? 'DE' : 'EN'),
+				_lang: (('de-DE' == Locale.getCurrent().name) ? 'DE' : 'EN'),
 
 				toTeam: oCurrentTeam.name,
 				toTeamId: oCurrentTeam.id,

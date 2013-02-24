@@ -61,7 +61,7 @@ Locale.define(locale, 'Tournament', {
 	'matches': 'Spiele',
 	'rules': 'Regelkenntnis',
 	'fouls': 'Fouls und Kontact',
-	'fair': 'Fair-Mindedness',
+	'fair': 'Fairplay',
 	'attitude': 'Positive Einstellung',
 	'spirit': 'Unser Spirit',
 	'average': 'Durchschnitt',
