@@ -157,7 +157,8 @@ var Collection = new Class({
 	 * @return array
 	 */
 	toArray: function() {
-		return this.data;
+
+		return this.data.clone();
 	},
 
 //pragma mark - Storage

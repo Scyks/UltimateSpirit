@@ -106,5 +106,7 @@ var Models_Result = new Class({
 
 	},
 
-	__fromJson: function(data) {}
+	__fromJson: function(data) {
+
+	}
 });

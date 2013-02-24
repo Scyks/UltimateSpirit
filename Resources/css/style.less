@@ -76,6 +76,10 @@ body {
 	}
 }
 
+.actionHover:hover {
+	color:white;
+	text-decoration: underline;
+}
 svg#sotg {background: white;}
 
 .m {
@@ -204,7 +208,7 @@ input {
 	border: 1px solid rgba(50, 50, 50, 0.6);
 	background: rgba(250, 250, 250, 1.6);
 	border-radius: 5px;
-	padding: 5px;
+	padding: 5px 5px 4px 5px;
 	display:block;
 }
 // Content
@@ -264,11 +268,8 @@ input {
 		input {
 			float:left;
 			width: 370px;
-		}
 
-		div.edit {
-
-			a {
+			+ a {
 				right: 5px;
 				top: 9px;
 			}
@@ -284,12 +285,7 @@ input {
 			}
 		}
 
-		&.new {
 
-			input {
-				width: 387px;
-			}
-		}
 	}
 
 }
@@ -305,7 +301,7 @@ input {
 
 		a {
 			top: 0px;
-			left:  390px;
+			left:  385px;
 		}
 	}
 
@@ -318,31 +314,36 @@ input {
 
 			&.teams:hover {
 				background-color: rgba(50, 50, 50, 0.5);
+
 				div.edit.active + div.buttons {display:none;}
 			}
 			&.teams:hover span.team div.buttons a {display:block;}
+
 			span {
 				display: inline-block;
 
 				&.team {
-					width: 450px;
+					width: 550px;
 					position: relative;
+
+					&.red {
+						color: #ff8551;
+					}
 
 					span {
 						cursor: pointer;
 					}
+
+
 					div.edit {
 						input {
 							float: left;
 							width: 380px;
 						}
 
-						a {
-							left: 390px;
-						}
 					}
 					div.buttons {
-						left: 290px;
+						right: 0px;
 						position: absolute;
 						top: 2px;
 
@@ -357,6 +358,9 @@ input {
 					text-align: center;
 					border-right: 1px solid rgba(125, 125, 125, 0.3);
 
+					&.matches {
+						cursor: pointer;
+					}
 					&.complete {
 						font-weight: bold;
 					}
@@ -371,12 +375,12 @@ input {
 
 				input {
 					margin-bottom: 5px;
-					width: 400px;
+					width: 380px;
 				}
 
 				a {
 					top: 5px;
-					left: 395px;
+					left: 390px;
 				}
 			}
 
@@ -399,13 +403,34 @@ input {
 					width: 100px;
 
 
-					&.matches {left: 455px;}
-					&.rules {left: 520px;}
-					&.fouls {left: 570px;}
-					&.fair {left: 620px;}
-					&.attitude {left: 670px;}
-					&.spirit {left: 720px;}
-					&.complete {left: 770px;}
+					&.matches {left: 555px;}
+					&.rules {left: 620px;}
+					&.fouls {left: 670px;}
+					&.fair {left: 720px;}
+					&.attitude {left: 770px;}
+					&.spirit {left: 820px;}
+					&.complete {left: 870px;}
+				}
+
+			}
+
+			&.sub {
+
+				span, a {
+					font-size: 11px
+				}
+
+				span.team {
+					margin-left: 20px;
+					width: 530px;
+
+					span {
+						cursor: default;
+					}
+					div.buttons {
+						left: 270px;
+						top: -1px;
+					}
 				}
 
 			}

@@ -66,5 +66,9 @@ Locale.define(locale, 'Tournament', {
 	'spirit': 'Unser Spirit',
 	'average': 'Durchschnitt',
 	'noResult': 'Es wurde bisher kein Team angelegt. Bitte lege eins an.',
-	'deleteConfirm': 'Willst du das Team inklusive der Statistik wirklich löschen?'
+	'deleteConfirm': 'Willst du das Team inklusive der Statistik wirklich löschen?',
+	'addSpiritDescription': 'Über diese Aktion kannst du ein neues Spirit Ergebnis hinzufügen.',
+	'showMatchesDesc': 'Über diese Aktion kannst du dir alle Spiele des Teams anzeigen lassen',
+	'createResult': 'Ergebnis anlegen',
+	'deleteResultConfirm': 'Willst du das Ergebnis wirklich löschen?'
 });

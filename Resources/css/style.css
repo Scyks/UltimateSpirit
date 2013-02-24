@@ -61,6 +61,10 @@ body.loading .loading {
 body .loading {
   display: none;
 }
+.actionHover:hover {
+  color: white;
+  text-decoration: underline;
+}
 svg#sotg {
   background: white;
 }
@@ -228,7 +232,7 @@ input {
   border: 1px solid rgba(50, 50, 50, 0.6);
   background: #fafafa;
   border-radius: 5px;
-  padding: 5px;
+  padding: 5px 5px 4px 5px;
   display: block;
 }
 .dashboard {
@@ -280,7 +284,7 @@ input {
   float: left;
   width: 370px;
 }
-.dashboard .tournament div.edit a {
+.dashboard .tournament input + a {
   right: 5px;
   top: 9px;
 }
@@ -293,9 +297,6 @@ input {
   float: right;
   display: none;
 }
-.dashboard .tournament.new input {
-  width: 387px;
-}
 .matches div.edit {
   position: relative;
 }
@@ -304,7 +305,7 @@ input {
 }
 .matches div.edit a {
   top: 0px;
-  left: 390px;
+  left: 385px;
 }
 .matches .teams li {
   border-bottom: 1px solid rgba(125, 125, 125, 0.3);
@@ -325,8 +326,11 @@ input {
   display: inline-block;
 }
 .matches .teams li span.team {
-  width: 450px;
+  width: 550px;
   position: relative;
+}
+.matches .teams li span.team.red {
+  color: #ff8551;
 }
 .matches .teams li span.team span {
   cursor: pointer;
@@ -335,11 +339,8 @@ input {
   float: left;
   width: 380px;
 }
-.matches .teams li span.team div.edit a {
-  left: 390px;
-}
 .matches .teams li span.team div.buttons {
-  left: 290px;
+  right: 0px;
   position: absolute;
   top: 2px;
 }
@@ -352,6 +353,9 @@ input {
   text-align: center;
   border-right: 1px solid rgba(125, 125, 125, 0.3);
 }
+.matches .teams li span.average.matches {
+  cursor: pointer;
+}
 .matches .teams li span.average.complete {
   font-weight: bold;
 }
@@ -363,11 +367,11 @@ input {
 }
 .matches .teams li.add input {
   margin-bottom: 5px;
-  width: 400px;
+  width: 380px;
 }
 .matches .teams li.add a {
   top: 5px;
-  left: 395px;
+  left: 390px;
 }
 .matches .teams li.headline {
   position: relative;
@@ -391,25 +395,40 @@ input {
   width: 100px;
 }
 .matches .teams li.headline span.matches {
-  left: 455px;
+  left: 555px;
 }
 .matches .teams li.headline span.rules {
-  left: 520px;
-}
-.matches .teams li.headline span.fouls {
-  left: 570px;
-}
-.matches .teams li.headline span.fair {
   left: 620px;
 }
-.matches .teams li.headline span.attitude {
+.matches .teams li.headline span.fouls {
   left: 670px;
 }
-.matches .teams li.headline span.spirit {
+.matches .teams li.headline span.fair {
   left: 720px;
 }
-.matches .teams li.headline span.complete {
+.matches .teams li.headline span.attitude {
   left: 770px;
+}
+.matches .teams li.headline span.spirit {
+  left: 820px;
+}
+.matches .teams li.headline span.complete {
+  left: 870px;
+}
+.matches .teams li.sub span,
+.matches .teams li.sub a {
+  font-size: 11px;
+}
+.matches .teams li.sub span.team {
+  margin-left: 20px;
+  width: 530px;
+}
+.matches .teams li.sub span.team span {
+  cursor: default;
+}
+.matches .teams li.sub span.team div.buttons {
+  left: 270px;
+  top: -1px;
 }
 .overlayContent .overlayBg {
   background: rgba(0, 0, 0, 0.3);

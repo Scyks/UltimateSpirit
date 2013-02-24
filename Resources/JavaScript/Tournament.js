@@ -90,26 +90,54 @@ var Tournament = new Class({
 						</li>\
 						{{/noResult}}\
 						{{#teams}}\
-						<li class="teams">\
-							<span class="team">\
-								<span data-id="{{id}}" data-controller="Tournament/addSpirit">{{nr}}. {{name}}</span>\
-								<div class="edit hidden">\
-									<input name="name" data-controller="Tournament/save" data-id="{{id}}" value="{{name}}" />\
-									<a class="button cancelEdit delete" data-controller="Tournament/cancelEdit">X</a>\
-								</div>\
-								<div class="buttons">\
-									<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">{{_delete}}</a>\
-									<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">{{_edit}}</a>\
-								</div>\
-							</span>\
-							<span class="matches mRight15 average">{{matches}}</span>\
-							<span class="rules average">{{rules}}</span>\
-							<span class="fouls average">{{fouls}}</span>\
-							<span class="fair average">{{fair}}</span>\
-							<span class="attitude average">{{attitude}}</span>\
-							<span class="spirit average">{{spirit}}</span>\
-							<span class="complete average">{{average}}</span>\
-						</li>\
+							<li class="teams">\
+								<span class="team {{#missing}}red{{/missing}}">\
+									<span class="actionHover" data-id="{{id}}" data-controller="Tournament/showMatches">{{nr}}. {{name}}</span>\
+									<div class="edit hidden">\
+										<input name="name" data-controller="Tournament/save" data-id="{{id}}" value="{{name}}" />\
+										<a class="button cancelEdit delete" data-controller="Tournament/cancelEdit">X</a>\
+									</div>\
+									<div class="buttons">\
+										<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">{{_delete}}</a>\
+										<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">{{_edit}}</a>\
+										<a title="{{_addSpiritDescription}}"  data-id="{{id}}" data-controller="Tournament/addSpirit" class="button edit smal greyFont mRight10">{{_createResult}}</a>\
+									</div>\
+								</span>\
+								<span class="matches mRight15 average" title="{{_showMatchesDesc}}">{{matches}}</span>\
+								<span class="rules average">{{rules}}</span>\
+								<span class="fouls average">{{fouls}}</span>\
+								<span class="fair average">{{fair}}</span>\
+								<span class="attitude average">{{attitude}}</span>\
+								<span class="spirit average">{{spirit}}</span>\
+								<span class="complete average">{{average}}</span>\
+							</li>\
+							\
+							{{#results}}\
+							<li class="teams team{{toTeam}} sub hidden">\
+								<span class="team {{#missing}}red{{/missing}}">\
+									<span class="">D{{day}} {{fromTeamObj.name}}</span>\
+									\
+									{{^missing}}\
+										<div class="buttons">\
+											<a data-id="{{id}}" data-team="{{toTeam}}" data-controller="Tournament/deleteResult" class="button smal delete greyFont">{{_delete}}</a>\
+											<a data-id="{{id}}" data-team="{{toTeam}}" data-controller="Tournament/editResult" class="button edit smal greyFont mRight10">{{_edit}}</a>\
+										</div>\
+									{{/missing}}\
+									{{#missing}}\
+										<div class="buttons">\
+											<a data-day="{{day}}" data-team="{{fromTeam}}" data-id="{{toTeam}}" data-controller="Tournament/addSpirit" class="button edit smal greyFont mRight10">{{_createResult}}</a>\
+										</div>\
+									{{/missing}}\
+								</span>\
+								<span  class=" matches mRight15 average" title=""></span>\
+								<span class="rules average">{{rules}}</span>\
+								<span class="fouls average">{{fouls}}</span>\
+								<span class="fair average">{{fair}}</span>\
+								<span class="attitude average">{{attitude}}</span>\
+								<span class="spirit average">{{spirit}}</span>\
+								<span class="complete average">{{average}}</span>\
+							</li>\
+							{{/results}}\
 						{{/teams}}\
 					</ul>\
 				</div>\
@@ -198,13 +226,13 @@ var Tournament = new Class({
 				</div>\
 				<div class="element toTeam">{{toTeam}}</div>\
 				<div class="element day">\
-					<select name="day">\
+					<select name="day" class="day">\
 						<option value="1">Day 1</option>\
-						<option value="1">Day 2</option>\
+						<option value="2">Day 2</option>\
 					</select>\
 				</div>\
 				\
-				<a class="button element save orange" data-id="{{toTeamId}}" data-controller="Tournament/saveSpirit">{{_save}}</a>\
+				<a class="button element save orange" data-id="{{toTeamId}}" data-result="{{resultId}}" data-controller="Tournament/saveSpirit">{{_save}}</a>\
 				<a class="button element cancel" data-controller="Overlay/close">{{_cancel}}</a>\
 			</div>\
 		</div>\
@@ -255,11 +283,30 @@ var Tournament = new Class({
 			_spirit: Locale.get('Tournament.spirit'),
 			_average: Locale.get('Tournament.average'),
 			_noResult: Locale.get('Tournament.noResult'),
+			_addSpiritDescription: Locale.get('Tournament.addSpiritDescription'),
+			_showMatchesDesc: Locale.get('Tournament.showMatchesDesc'),
+			_createResult: Locale.get('Tournament.createResult'),
+			_deleteResultConfirm: Locale.get('Tournament.deleteResultConfirm'),
 
 			name: this.tournament.name,
 			teams: this.tournament.teams.toArray(),
 			noResult: false
 		};
+
+		/*
+		 * save teams in temp array for adding matches and store all
+		 * matches to find out if a match is missing
+		 */
+		var aTeams = [];
+		var aMatches = [];
+		var aMatchesClean = [];
+		obj.teams.each(function(team) {
+			aTeams[team.id] = team;
+			team.results.toArray().each(function(res) {
+				aMatches.push({from: parseInt(res.fromTeam), to: parseInt(res.toTeam), day: res.day});
+				aMatchesClean.push(parseInt(res.fromTeam) + '_' + parseInt(res.toTeam));
+			});
+		});
 
 		if (0 < obj.teams.length) {
 			// sort teams by name
@@ -276,8 +323,44 @@ var Tournament = new Class({
 			// add number to team
 			var idx = 1;
 			obj.teams.each(function(el) {
+
 				el.nr = idx;
+				el.missing = false;
 				idx++;
+
+				// iterate results
+				el.results = el.results.toArray();
+				el.results.each(function(res) {
+					res.fromTeamObj = aTeams[res.fromTeam];
+					res.missing = false;
+
+				});
+
+				aMatches.each(function(match) {
+					// check if this team get and don't add result for this team
+					if (parseInt(match.from) == parseInt(el.id) && !aMatchesClean.contains(parseInt(match.to) + '_' + parseInt(el.id))) {
+
+						// create temp match result to show that there is a match missing
+						el.matches += 1;
+						el.missing = true;
+						el.results.push({
+							fromTeamObj: aTeams[match.to],
+							fromTeam: parseInt(match.to),
+							toTeam: parseInt(el.id),
+							missing: true,
+							day: match.day,
+							average: '',
+							rules: '',
+							fouls: '',
+							fair: '',
+							attitude: '',
+							spirit: ''
+						});
+
+					}
+				});
+
+
 			});
 		} else {
 			obj.noResult = true;
@@ -532,6 +615,8 @@ var Tournament = new Class({
 
 		// get id
 		var id = oElement.get('data-id');
+		var iDay = oElement.get('data-day');
+		var iTeamId = oElement.get('data-team');
 
 		// add click event
 		oElement.addEvent('click', function() {
@@ -559,8 +644,8 @@ var Tournament = new Class({
 			// template vars
 			var obj = {
 				_pleaseChoose: Locale.get('default.pleaseChoose'),
-				_cancel: Locale.get('default.save'),
-				_save: Locale.get('default.cancel'),
+				_cancel: Locale.get('default.cancel'),
+				_save: Locale.get('default.save'),
 				_lang: (('de-DE' == Locale.getCurrent().name) ? 'DE' : 'EN'),
 
 				toTeam: oCurrentTeam.name,
@@ -570,11 +655,19 @@ var Tournament = new Class({
 
 			// render HTML
 			var HTML = Mustache.render(this.overlay, obj);
-			document.body.getElement('.overlayContent').empty();
-			document.body.getElement('.overlayContent').set('html', HTML);
+
+			var oOverlayContent = document.body.getElement('.overlayContent');
+			oOverlayContent.empty();
+			oOverlayContent.set('html', HTML);
+
+			// set values
+			if (iDay && iTeamId) {
+				oOverlayContent.getElement('select.fromTeam').set('value', iTeamId);
+				oOverlayContent.getElement('select.day').set('value', iDay);
+			}
 
 			// Template parse
-			Template.parse(document.body.getElement('.overlayContent'));
+			Template.parse(oOverlayContent);
 
 		}.bind(this));
 	},
@@ -676,11 +769,20 @@ var Tournament = new Class({
 		oElement.addEvent('click', function() {
 
 			var iId = oElement.get('data-id');
+			var oTeam = this.tournament.teams.getById(iId);
+
+			var oCurrentResult = false;
+			if (oElement.get('data-result')) {
+				oCurrentResult = oTeam.results.getById(oElement.get('data-result'));
+			}
 
 			// first check if team was selected
 			var oContent = oElement.getParent('div.content');
 			var oTeamSelect = oContent.getElement('select.fromTeam');
+			var oDaySelect = oContent.getElement('select.day');
+
 			var iFromTeam = parseInt(oTeamSelect.get('value'));
+			var iDay = parseInt(oDaySelect.get('value'));
 
 			if (isNaN(iFromTeam)) {
 				oTeamSelect.addClass('error');
@@ -691,14 +793,19 @@ var Tournament = new Class({
 				return false;
 			}
 
-			var oTeam = this.tournament.teams.getById(iId);
 
 			// create Model
-			var oResult = new Models_Result();
+			if (false == oCurrentResult) {
+				var oResult = new Models_Result();
+			} else {
+				var oResult = oCurrentResult;
+			}
+
 
 			// teams
 			oResult.fromTeam = iFromTeam;
 			oResult.toTeam = iId;
+			oResult.day = iDay;
 
 			// points
 			oResult.average = this.points['sum'];
@@ -708,8 +815,10 @@ var Tournament = new Class({
 			oResult.attitude = this.points['attitude'];
 			oResult.spirit = this.points['spirit'];
 
-			// store Results
-			oTeam.results.add(oResult);
+			if (false == oCurrentResult) {
+				// store Results
+				oTeam.results.add(oResult);
+			}
 
 			// recalculate avegares
 			oTeam.calculateAverages();
@@ -724,5 +833,124 @@ var Tournament = new Class({
 			this.refreshList();
 
 		}.bind(this));
+	},
+
+//pragma mark - match and result modifications
+
+	showMatchesAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			var iId = oElement.get('data-id');
+
+			// get all sub Elemens
+			document.getElements('li.sub.team' + iId).each(function(oLi) {
+				// if open - hide matches
+				if (oElement.hasClass('open')) {
+					oLi.addClass('hidden');
+				} else {
+					oLi.removeClass('hidden');
+				}
+			});
+
+			// add or remove class open from/to toggle element to stora toggle state
+			if (oElement.hasClass('open')) {
+				oElement.removeClass('open');
+			} else {
+				oElement.addClass('open');
+			}
+		});
+	},
+
+	editResultAction: function(oElement) {
+
+		// get id
+		var id = oElement.get('data-id');
+		var iTeamId = oElement.get('data-team');
+
+		// add click event
+		oElement.addEvent('click', function() {
+
+			// get current objects
+			var oCurrentTeam = this.tournament.teams.getById(id);
+			var oCurrentResult =  oCurrentTeam.results.getById(id);
+
+			// reset selected points
+			this.points =  {
+				rules: 0,
+				fouls: 0,
+				fair: 0,
+				attitude: 0,
+				spirit: 0,
+				sum: 0
+			};
+
+			// get teams for select, but exclude current
+			aTeams = [];
+			this.tournament.teams.toArray().each(function(el) {
+				if (el.id != id) {
+					aTeams.push(el);
+				}
+			});
+
+
+
+			// template vars
+			var obj = {
+				_pleaseChoose: Locale.get('default.pleaseChoose'),
+				_cancel: Locale.get('default.cancel'),
+				_save: Locale.get('default.save'),
+				_lang: (('de-DE' == Locale.getCurrent().name) ? 'DE' : 'EN'),
+
+				toTeam: oCurrentTeam.name,
+				toTeamId: oCurrentTeam.id,
+				resultId: oCurrentResult.id,
+				teams: aTeams
+			};
+
+			// render HTML
+			var HTML = Mustache.render(this.overlay, obj);
+			var oOverlayContent = document.body.getElement('.overlayContent');
+
+			oOverlayContent.empty();
+			oOverlayContent.set('html', HTML);
+
+			// Template parse
+			Template.parse(oOverlayContent);
+
+			// set values
+			oOverlayContent.getElement('select.fromTeam').set('value', oCurrentResult.fromTeam);
+			oOverlayContent.getElement('select.day').set('value', oCurrentResult.day);
+
+			['rules', 'fouls', 'fair', 'attitude', 'spirit'].each(function(sSection) {
+				var oPoint = oOverlayContent.getElement('circle.' + sSection + '[data-points=' + oCurrentResult[sSection] + ']');
+				oPoint.fireEvent('click');
+			});
+
+		}.bind(this));
+	},
+
+	deleteResultAction: function(oElement) {
+
+		// get id
+		var id = oElement.get('data-id');
+		var iTeamId = oElement.get('data-team');
+
+		// add click event
+		oElement.addEvent('click', function(oEvent) {
+			oEvent.stop();
+
+			// ask user
+			if (true === confirm(Locale.get('Tournament.deleteResultConfirm'))) {
+
+				// delete and save
+				var oTeam = this.tournament.teams.getById(iTeamId);
+				oTeam.results.deleteById(id);
+
+				this.tournaments.save();
+
+				// refresh html
+				this.refreshList();
+			}
+		}.bind(this));
 	}
+
 });

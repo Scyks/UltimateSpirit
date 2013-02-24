@@ -115,7 +115,7 @@ var Models_Team = new Class({
 			this.name = sName;
 		}
 
-		this.results = new Collection('results');
+		this.results = new Collection('results', false);
 	},
 
 	/**
@@ -156,7 +156,8 @@ var Models_Team = new Class({
 	},
 	
 	__fromJson: function(data) {
-		var oResults = new Collection('results');
+
+		var oResults = new Collection('results', false);
 		if (data.results) {
 			oResults.data = data.results.data;
 			oResults.load();
