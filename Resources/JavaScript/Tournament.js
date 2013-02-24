@@ -333,7 +333,7 @@ var Tournament = new Class({
 			aTeams[team.id] = team;
 			team.results.toArray().each(function(res) {
 				aMatches.push({from: parseInt(res.fromTeam), to: parseInt(res.toTeam), day: res.day});
-				aMatchesClean.push(parseInt(res.fromTeam) + '_' + parseInt(res.toTeam));
+				aMatchesClean.push(parseInt(res.day) + '_' + parseInt(res.fromTeam) + '_' + parseInt(res.toTeam));
 			});
 		});
 
@@ -367,7 +367,7 @@ var Tournament = new Class({
 
 				aMatches.each(function(match) {
 					// check if this team get and don't add result for this team
-					if (parseInt(match.from) == parseInt(el.id) && !aMatchesClean.contains(parseInt(match.to) + '_' + parseInt(el.id))) {
+					if (parseInt(match.from) == parseInt(el.id) && !aMatchesClean.contains(match.day + '_' + match.to + '_' + el.id)) {
 
 						// create temp match result to show that there is a match missing
 						el.matches += 1;
