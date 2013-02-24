@@ -50,11 +50,12 @@ var Dashboard = new Class({
 			\
 			<div class="tournament new hidden">\
 				<input name="name" value="" data-controller="Dashboard/save" />\
+				<a class="button cancelEdit delete" data-controller="Dashboard/cancelEdit">X</a>\
 			</div>\
 			\
 			{{#tournaments}}\
 			<div class="tournament">\
-				<h3  data-id="{{id}}" data-controller="Dashboard/open">{{name}}</h3>\
+				<h3 class="actionHover" data-id="{{id}}" data-controller="Dashboard/open">{{name}}</h3>\
 				<div class="edit hidden">\
 					<input name="name" data-id="{{id}}" value="{{name}}" data-controller="Dashboard/save" />\
 					<a class="button cancelEdit delete" data-controller="Dashboard/cancelEdit">X</a>\
@@ -177,7 +178,7 @@ var Dashboard = new Class({
 	 */
 	cancelEditAction: function(oElement) {
 
-		var oEdit = oElement.getParent('div.edit');
+		var oEdit = oElement.getParent('div');
 
 		oElement.addEvent('click', function() {
 			// hide edit
@@ -187,11 +188,13 @@ var Dashboard = new Class({
 			// get h3
 			var oH3 = oElement.getParent('div.tournament').getElement('h3');
 
-			// restore input valu to h3 value
-			oEdit.getElement('input').set('value', oH3.get('html'));
+			if (oH3) {
+				// restore input valu to h3 value
+				oEdit.getElement('input').set('value', oH3.get('html'));
 
-			// show h3
-			oH3.removeClass('hidden');
+				// show h3
+				oH3.removeClass('hidden');
+			}
 		});
 	},
 
