@@ -94,7 +94,7 @@ var Application = new Class({
 		}
 		oController.init(this.params);
 
-		this.getController('Settings').init();
+		//this.getController('Settings').init();
 	},
 
 	/**
