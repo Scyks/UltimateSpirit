@@ -41,6 +41,11 @@ var Application = new Class({
 	params: {},
 	root: null,
 
+	availLanguages: [
+		'en-US',
+		'de-DE'
+	],
+
 	/**
 	 * Init Application
 	 */
@@ -52,6 +57,7 @@ var Application = new Class({
 		// set title by language
 		document.getElement('title').set('html', Locale.get('default.title'));
 		document.getElement('h1').set('html', Locale.get('default.title'));
+		document.getElement('a.settings').set('html', Locale.get('Setting.title'));
 
 		// get current controller
 		var aPages = document.location.href.split('#');
@@ -88,7 +94,7 @@ var Application = new Class({
 		}
 		oController.init(this.params);
 
-
+		this.getController('Settings').init();
 	},
 
 	/**
@@ -121,5 +127,11 @@ var Application = new Class({
 			this.initAction();
 		}.bind(this);
 
+	},
+
+	settingsAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			this.getController('Settings').init();
+		}.bind(this));
 	}
 });

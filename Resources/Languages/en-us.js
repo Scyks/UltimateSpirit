@@ -36,7 +36,7 @@
 
 var locale = 'en-US';
 
-// global defenitions
+// global translation
 Locale.define(locale, 'default', {
 	'title': 'Utlimate Spirit Analytics',
 	'edit': 'Edit',
@@ -44,10 +44,11 @@ Locale.define(locale, 'default', {
 	'back': 'back',
 	'pleaseChoose': 'Please choose',
 	'cancel': 'Cancel',
-	'save': 'Save'
+	'save': 'Save',
+	'yes': 'Yes'
 });
 
-// definitions for Dashboard
+// Dashboard translations
 Locale.define(locale, 'Dashboard', {
 	'title': 'Tournaments',
 	'noResult': 'There is no tournament created - please add a tournament using the button on the right side',
@@ -55,6 +56,7 @@ Locale.define(locale, 'Dashboard', {
 	'deleteConfirm': 'Do you really want to delete this tournament including all analysis?'
 });
 
+// Tournament translations
 Locale.define(locale, 'Tournament', {
 	'addTeam': 'Add Team',
 	'changeTournamentName': 'To change this tournament name use double click.',
@@ -71,4 +73,9 @@ Locale.define(locale, 'Tournament', {
 	'showMatchesDesc': 'Click to show all games by this team',
 	'createResult': 'Create result',
 	'deleteResultConfirm': 'Do You really want to delete this result?'
+});
+
+// Setting translations
+Locale.define(locale, 'Setting', {
+	'title': 'Settings'
 });

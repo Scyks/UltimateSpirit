@@ -185,6 +185,18 @@ h1 {
 .hidden {
 	display: none !important;
 }
+
+a.settings, a.settings:hover {
+	position: absolute;
+	top: 10px;
+	right: 20px;
+
+	background-image: url(../images/wrench.png);
+	background-repeat: no-repeat;
+	background-position: 10px 6px;
+	padding-left: 35px;
+}
+
 .copyright {
 
 	position: absolute;
@@ -468,6 +480,10 @@ input {
 			pading: 2px 5px;
 		}
 
+		.content {
+			border-radius: 10px;
+		}
+
 		&.spirit {
 			//height: 500px;
 
@@ -477,6 +493,7 @@ input {
 			}
 
 			svg {
+				border-radius: 10px;
 				text {
 					font-size: 21px;
 
@@ -527,6 +544,52 @@ input {
 				&.cancel {
 					left: 60px;
 					top: 770px;
+				}
+			}
+		}
+
+		&.settings {
+
+			.content {
+				background: white;
+				height: 200px;
+
+				h1 {
+					color: black;
+					padding: 10px 20px;
+				}
+
+				section {
+					margin: 20px;
+
+					header {
+						border-bottom: 1px solid #ccc;
+						color: #666;
+						display:block;
+						margin-bottom: 10px;
+						padding-bottom: 5px;
+
+					}
+					dl {width: 460px;}
+
+					dt, dd {
+						display:block;
+						float: left;
+						padding-bottom: 5px;
+						width: 200px;
+					}
+					dt {
+						width: 260px;
+					}
+
+				}
+
+				select.languages {
+					width: 200px;
+				}
+				input[type=checkbox] {
+					float: left;
+					margin-right: 10px;
 				}
 			}
 		}

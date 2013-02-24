@@ -36,7 +36,7 @@
 
 var locale = 'de-DE';
 
-// global defenitions
+// global translation
 Locale.define(locale, 'default', {
 	'title': 'Utlimate Spirit Auswertung',
 	'edit': 'Bearbeiten',
@@ -44,10 +44,11 @@ Locale.define(locale, 'default', {
 	'back': 'Zurück',
 	'pleaseChoose': 'Bitte auswählen',
 	'cancel': 'Abbechen',
-	'save': 'Speichern'
+	'save': 'Speichern',
+	'yes': 'Ja'
 });
 
-// definitions for Dashboard
+// Dashboard translations
 Locale.define(locale, 'Dashboard', {
 	'title': 'Turniere',
 	'noResult': 'Bisher wurde kein Turnier angelegt. Du kannst über den Button "Turnier anlegen" auf der rechten Seite ein Turnier anlegen',
@@ -55,6 +56,7 @@ Locale.define(locale, 'Dashboard', {
 	'deleteConfirm': 'Willst du dieses Turnier und alle Statistiken wirklich löschen?'
 });
 
+// Tournament translations
 Locale.define(locale, 'Tournament', {
 	'addTeam': 'Team hinzufügen',
 	'changeTournamentName': 'Zum Ändern des Tunrniernamens kannst du einfach Doppelklicken',
@@ -71,4 +73,14 @@ Locale.define(locale, 'Tournament', {
 	'showMatchesDesc': 'Über diese Aktion kannst du dir alle Spiele des Teams anzeigen lassen',
 	'createResult': 'Ergebnis anlegen',
 	'deleteResultConfirm': 'Willst du das Ergebnis wirklich löschen?'
+});
+
+// Setting translations
+Locale.define(locale, 'Setting', {
+	'title': 'Einstellungen',
+	'globalHeader': 'Globale Einstellungen',
+	'language': 'Sprache',
+	'update': 'Automatisch nach Updates suchen',
+	'de-DE': 'Deutsch',
+	'en-US': 'English (US)',
 });
