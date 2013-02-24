@@ -100,16 +100,16 @@ var Tournament = new Class({
 									<div class="buttons">\
 										<a data-id="{{id}}" data-controller="Tournament/deleteTeam" class="button smal delete greyFont">{{_delete}}</a>\
 										<a data-id="{{id}}" data-controller="Tournament/editTeam" class="button edit smal greyFont mRight10">{{_edit}}</a>\
-										<a title="{{_addSpiritDescription}}"  data-id="{{id}}" data-controller="Tournament/addSpirit" class="button edit smal greyFont mRight10">{{_createResult}}</a>\
+										<a title="{{_addSpiritDescription}}" data-day="{{missDay}}" data-team="{{missTeam}}" data-id="{{id}}" data-controller="Tournament/addSpirit" class="button edit smal greyFont mRight10">{{_createResult}}</a>\
 									</div>\
 								</span>\
 								<span class="matches mRight15 average" title="{{_showMatchesDesc}}">{{matches}}</span>\
-								<span class="rules average">{{rules}}</span>\
-								<span class="fouls average">{{fouls}}</span>\
-								<span class="fair average">{{fair}}</span>\
-								<span class="attitude average">{{attitude}}</span>\
-								<span class="spirit average">{{spirit}}</span>\
-								<span class="complete average">{{average}}</span>\
+								<span class="rules average">{{#format}}{{rules}}{{/format}}</span>\
+								<span class="fouls average">{{#format}}{{fouls}}{{/format}}</span>\
+								<span class="fair average">{{#format}}{{fair}}{{/format}}</span>\
+								<span class="attitude average">{{#format}}{{attitude}}{{/format}}</span>\
+								<span class="spirit average">{{#format}}{{spirit}}{{/format}}</span>\
+								<span class="complete average">{{#format}}{{average}}{{/format}}</span>\
 							</li>\
 							\
 							{{#results}}\
@@ -244,6 +244,31 @@ var Tournament = new Class({
 	id: null,
 
 	/**
+	 * float format method, to return every number in float with
+	 * 2 decimal integers
+	 * - 1,00
+	 * - 1,60,
+	 * - 1,56
+	 *
+	 * @return {Function}
+	 */
+	format: function() {
+		return function(text, render) {
+			var sNumber = render(text).toString();
+			var aSplit = sNumber.split('.');
+			if (!aSplit[1]) {
+				aSplit[1] = '00';
+			}
+			if (1 == aSplit[1].length) {
+				aSplit[1] += '0';
+			}
+
+
+			return aSplit.join(',');
+		};
+	},
+
+	/**
 	 * init method
 	 * @param params
 	 */
@@ -255,6 +280,8 @@ var Tournament = new Class({
 		// empty content and add class loading
 		document.body.getElement('.content').empty();
 		document.body.addClass('loading');
+
+		this.loadTournaments();
 
 		this.tournament = this.tournaments.getById(this.id);
 
@@ -287,6 +314,8 @@ var Tournament = new Class({
 			_showMatchesDesc: Locale.get('Tournament.showMatchesDesc'),
 			_createResult: Locale.get('Tournament.createResult'),
 			_deleteResultConfirm: Locale.get('Tournament.deleteResultConfirm'),
+
+			format: this.format,
 
 			name: this.tournament.name,
 			teams: this.tournament.teams.toArray(),
@@ -343,6 +372,8 @@ var Tournament = new Class({
 						// create temp match result to show that there is a match missing
 						el.matches += 1;
 						el.missing = true;
+						el.missTeam = match.to;
+						el.missDay = match.day;
 						el.results.push({
 							fromTeamObj: aTeams[match.to],
 							fromTeam: parseInt(match.to),
@@ -722,45 +753,42 @@ var Tournament = new Class({
 			oLine2.set('y1', iCy - 18);
 			oLine2.set('y2', iCy + 16);
 
-			if (0 < iPoints) {
+			// set points action
+			var setPoints = function(iPoints, bAdd) {
+				if (0 < iPoints) {
 
-				// set points action
-				var setPoints = function(iPoints, bAdd) {
-					if (0 < iPoints) {
+					// get point sum element
+					var oPoint = oElement.getParent().getElement('text.' + iPoints + 'p');
 
-						// get point sum element
-						var oPoint = oElement.getParent().getElement('text.' + iPoints + 'p');
+					// get all sum element
+					var oSum = oElement.getParent().getElement('text.sum');
 
-						// get all sum element
-						var oSum = oElement.getParent().getElement('text.sum');
+					// get current points
+					var iCurrentPoints = parseInt(oPoint.textContent);
+					var iSumPoints = parseInt(oSum.textContent);
 
-						// get current points
-						var iCurrentPoints = parseInt(oPoint.textContent);
-						var iSumPoints = parseInt(oSum.textContent);
-
-						// ad or remove points
-						if (true == bAdd) {
-							oPoint.textContent = iCurrentPoints + iPoints;
-							oSum.textContent = iSumPoints + iPoints;
-							this.points['sum'] = iSumPoints + iPoints;
-						} else {
-							oPoint.textContent = iCurrentPoints - iPoints;
-							oSum.textContent = iSumPoints - iPoints;
-							this.points['sum'] = iSumPoints - iPoints;
-						}
+					// ad or remove points
+					if (true == bAdd) {
+						oPoint.textContent = iCurrentPoints + iPoints;
+						oSum.textContent = iSumPoints + iPoints;
+						this.points['sum'] = iSumPoints + iPoints;
+					} else {
+						oPoint.textContent = iCurrentPoints - iPoints;
+						oSum.textContent = iSumPoints - iPoints;
+						this.points['sum'] = iSumPoints - iPoints;
 					}
-				}.bind(this);
+				}
+			}.bind(this);
 
-				// get current selected points and remove these
-				var oldPoints = parseInt(this.points[sCategory]);
-				setPoints(oldPoints, false);
+			// get current selected points and remove these
+			var oldPoints = parseInt(this.points[sCategory]);
+			setPoints(oldPoints, false);
 
-				// store new points
-				this.points[sCategory] = iPoints;
+			// store new points
+			this.points[sCategory] = iPoints;
 
-				// set to view
-				setPoints(iPoints, true);
-			}
+			// set to view
+			setPoints(iPoints, true);
 
 		}.bind(this));
 	},
@@ -870,7 +898,7 @@ var Tournament = new Class({
 		oElement.addEvent('click', function() {
 
 			// get current objects
-			var oCurrentTeam = this.tournament.teams.getById(id);
+			var oCurrentTeam = this.tournament.teams.getById(iTeamId);
 			var oCurrentResult =  oCurrentTeam.results.getById(id);
 
 			// reset selected points
@@ -916,6 +944,7 @@ var Tournament = new Class({
 			// Template parse
 			Template.parse(oOverlayContent);
 
+			console.log(oCurrentResult);
 			// set values
 			oOverlayContent.getElement('select.fromTeam').set('value', oCurrentResult.fromTeam);
 			oOverlayContent.getElement('select.day').set('value', oCurrentResult.day);
@@ -944,6 +973,8 @@ var Tournament = new Class({
 				// delete and save
 				var oTeam = this.tournament.teams.getById(iTeamId);
 				oTeam.results.deleteById(id);
+
+				oTeam.calculateAverages();
 
 				this.tournaments.save();
 

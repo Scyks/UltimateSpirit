@@ -146,13 +146,15 @@ var Models_Team = new Class({
 
 		}.bind(this));
 
-		// calculate real averages
-		this.average  = Math.round((this.average / this.matches) * 100) / 100;
-		this.rules    = Math.round((this.rules / this.matches) * 100) / 100;
-		this.fouls    = Math.round((this.fouls / this.matches) * 100) / 100;
-		this.fair     = Math.round((this.fair / this.matches) * 100) / 100;
-		this.attitude = Math.round((this.attitude / this.matches) * 100) / 100;
-		this.spirit   = Math.round((this.spirit / this.matches) * 100) / 100;
+		if (0 < this.matches) {
+			// calculate real averages
+			this.average  = Math.round((this.average / this.matches) * 100) / 100;
+			this.rules    = Math.round((this.rules / this.matches) * 100) / 100;
+			this.fouls    = Math.round((this.fouls / this.matches) * 100) / 100;
+			this.fair     = Math.round((this.fair / this.matches) * 100) / 100;
+			this.attitude = Math.round((this.attitude / this.matches) * 100) / 100;
+			this.spirit   = Math.round((this.spirit / this.matches) * 100) / 100;
+		}
 	},
 	
 	__fromJson: function(data) {

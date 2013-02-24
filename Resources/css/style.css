@@ -297,6 +297,9 @@ input {
   float: right;
   display: none;
 }
+.matches .box {
+  min-width: 1000px;
+}
 .matches div.edit {
   position: relative;
 }
