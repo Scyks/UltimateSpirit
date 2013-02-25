@@ -51,13 +51,15 @@ var Application = new Class({
 	 */
 	initAction: function() {
 
-		// @TODO Settings
-		Locale.use('de-DE');
 
-		// set title by language
-		document.getElement('title').set('html', Locale.get('default.title'));
-		document.getElement('h1').set('html', Locale.get('default.title'));
-		document.getElement('a.settings').set('html', Locale.get('Setting.title'));
+		var oSettings = new Models_Setting().load();
+
+		// add Change event, for language
+		Locale.addEvent('change', this.translateMain);
+
+		// set current locale
+		Locale.use(oSettings.language);
+
 
 		// get current controller
 		var aPages = document.location.href.split('#');
@@ -95,6 +97,35 @@ var Application = new Class({
 		oController.init(this.params);
 
 		//this.getController('Settings').init();
+
+
+//		var sUrl = 'http://localhost/index.php?data=/api/xml/9413A2CC2CF109FCBE844E5E4249C805/user?username=scyks';
+//		new Request.HTML({
+//			url: sUrl,
+//			method: 'get',
+//			noCache: true,
+//			headers: {
+//
+//				foobar: 'foo'
+//			},
+//
+//		}).send();
+//
+//
+//		invocation = new XMLHttpRequest();
+//		if(invocation)
+//		{
+//			invocation.open('GET', sUrl, true);
+//			//invocation.onreadystatechange = handler;
+//			invocation.send();
+//		}
+	},
+
+	translateMain: function() {
+		// set title by language
+		document.getElement('title').set('html', Locale.get('default.title'));
+		document.getElement('h1').set('html', Locale.get('default.title'));
+		document.getElement('a.settings').set('html', Locale.get('Setting.title'));
 	},
 
 	/**

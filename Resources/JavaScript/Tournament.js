@@ -289,10 +289,14 @@ var Tournament = new Class({
 		this.refreshList();
 		document.body.removeClass('loading');
 
-
+		//Locale.removeEvents('change');
+		Locale.addEvent('change', this.refreshList.bind(this));
 
 	},
 
+	/**
+	 * refresh team list and show spirit results
+	 */
 	refreshList: function() {
 
 

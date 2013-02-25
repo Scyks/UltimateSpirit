@@ -42,6 +42,12 @@ var Settings = new Class({
 	Extends: Controller,
 
 	/**
+	 * current settings
+	 * @var Models_Setting
+	 */
+	settings: null,
+
+	/**
 	 * overlay - add spirit template
 	 * @var string
 	 */
@@ -50,24 +56,30 @@ var Settings = new Class({
 		<div class="overlay settings" data-controller="Overlay/content">\
 			<div class="content">\
 				<a class="button close" data-controller="Overlay/close">X</a>\
-				<h1>{{_title}} (does currently not work)</h1>\
-				<section>\
-					<header>{{_globalHeader}}</header>\
-					<dl>\
-						<dt>{{_language}}</dt>\
-						<dd>\
-							<select name="language" class="languages">\
-							{{#languages}}\
-								<option value="{{name}}">{{translation}}</option>\
-							{{/languages}}\
-							</select>\
-						</dd>\
-						<dt>{{_update}}</dt>\
-						<dd>\
-							<input type="checkbox" name="update" class="update"> {{_yes}}\
-						</dd>\
-					</dl>\
-				</section>\
+				<h1>{{_title}}</h1>\
+				<form name="settings">\
+					<section>\
+						<header>{{_globalHeader}}</header>\
+						<dl>\
+							<dt>{{_language}}</dt>\
+							<dd>\
+								<select name="language" class="languages">\
+								{{#languages}}\
+									<option value="{{name}}" {{#selected}}selected="selected"{{/selected}}>{{translation}}</option>\
+								{{/languages}}\
+								</select>\
+							</dd>\
+							<dt>{{_update}}</dt>\
+							<dd>\
+								<input type="checkbox" name="update" class="update" {{#settings.update}}checked="checked"{{/settings.update}}> {{_yes}}\
+							</dd>\
+						</dl>\
+					</section>\
+					<section class="save">\
+						<a data-controller="Overlay/close" class="button cancel">{{_cancel}}</a>\
+						<a data-controller="Settings/save" class="button save orange">{{_save}}</a>\
+					</section>\
+				</form>\
 			</div>\
 		</div>\
 	',
@@ -78,31 +90,56 @@ var Settings = new Class({
 	 */
 	init: function(params) {
 
-
+		// remove loading
 		document.body.removeClass('loading');
 
+		// open overlay
 		this.open();
 
 	},
 
+	/**
+	 * load settings from storage
+	 */
+	loadSettings: function() {
+		this.settings = new Models_Setting();
+		this.settings.load();
+	},
+
+
+	/**
+	 * open overlay and show available settings
+	 */
 	open: function() {
 
+		// laod settings
+		this.loadSettings();
 
+		// define language list for template
 		var aLanguages = [];
 		Application.availLanguages.each(function(lang) {
 			aLanguages.push({
 				name: lang,
-				translation: Locale.get('Setting.' + lang)
+				translation: Locale.get('Setting.' + lang),
+
+				// mark selected
+				selected: ((lang == this.settings.language) ? true : false)
 			});
 
-		});
+		}.bind(this));
+
+		// template object
 		var obj = {
 			_title: Locale.get('Setting.title'),
 			_globalHeader: Locale.get('Setting.globalHeader'),
 			_update: Locale.get('Setting.update'),
 			_language: Locale.get('Setting.language'),
 			_yes: Locale.get('default.yes'),
-			languages: aLanguages
+			_cancel: Locale.get('default.cancel'),
+			_save: Locale.get('default.save'),
+			languages: aLanguages,
+
+			settings: this.settings
 		};
 
 		// render HTML
@@ -116,6 +153,52 @@ var Settings = new Class({
 		Template.parse(oOverlayContent);
 
 
+	},
+
+	/**
+	 * save defined settings to local storage
+	 * @param Object oElement
+	 */
+	saveAction: function(oElement) {
+
+		// add click event
+		oElement.addEvent('click', function() {
+
+			// get Data
+			var oForm = oElement.getParent('form');
+			var oData = oForm.toQueryString().parseQueryString();
+
+			// store current language to change language
+			var lang = this.settings.lang;
+
+			// set update to false, because if its marked as false, its not in data
+			this.settings.update = false;
+			Object.each(oData, function(value, key) {
+
+				// change on to true
+				if ('on' == value && 'update' == key) {
+					value = true;
+				}
+
+				// store setting
+				this.settings[key] = value;
+
+			}.bind(this));
+
+			// change language if needed
+			if (this.settings.language !== lang) {
+				Locale.use(this.settings.language);
+			}
+
+			// save seettings
+			this.settings.save();
+
+			// remove Overlay
+			var oOverlayContent = document.body.getElement('.overlayContent');
+			oOverlayContent.empty();
+
+
+		}.bind(this));
 	}
 
 });

@@ -92,6 +92,9 @@ var Dashboard = new Class({
 		// remove loading
 		document.body.removeClass('loading');
 
+		//Locale.removeEvents('change');
+		Locale.addEvent('change', this.refreshList.bind(this));
+
 	},
 
 	/**

@@ -551,6 +551,9 @@ input {
 .overlayContent .overlay.settings .content section dt {
   width: 260px;
 }
+.overlayContent .overlay.settings .content section.save {
+  float: right;
+}
 .overlayContent .overlay.settings .content select.languages {
   width: 200px;
 }

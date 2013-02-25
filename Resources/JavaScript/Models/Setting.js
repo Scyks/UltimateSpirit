@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    Resources/Languages/en-us.js
+ * @filesource    Resources/JavaScript/Models/Setting.js
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -33,54 +33,80 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
+var Models_Setting = new Class({
 
-var locale = 'en-US';
+	__class: 'Models_Setting',
+	/**
+	 * id
+	 * @var integer
+	 */
+	id: null,
 
-// global translation
-Locale.define(locale, 'default', {
-	'title': 'Utlimate Spirit Analytics',
-	'edit': 'Edit',
-	'delete': 'Delete',
-	'back': 'back',
-	'pleaseChoose': 'Please choose',
-	'cancel': 'Cancel',
-	'save': 'Save',
-	'yes': 'Yes'
-});
+	/**
+	 * language
+	 * @var integer
+	 */
+	language: 'en-US',
 
-// Dashboard translations
-Locale.define(locale, 'Dashboard', {
-	'title': 'Tournaments',
-	'noResult': 'There is no tournament created - please add a tournament using the button on the right side',
-	'addTournament': 'Add Tournament',
-	'deleteConfirm': 'Do you really want to delete this tournament including all analysis?'
-});
+	/**
+	 * updates
+	 * @var integer
+	 */
+	update: true,
 
-// Tournament translations
-Locale.define(locale, 'Tournament', {
-	'addTeam': 'Add Team',
-	'changeTournamentName': 'To change this tournament name use double click.',
-	'matches': 'Matches',
-	'rules': 'Rules Knowledge',
-	'fouls': 'Fouls and Contact',
-	'fair': 'Fair-Mindedness',
-	'attitude': 'Positive Attitude',
-	'spirit': 'Our Spirit',
-	'average': 'Average',
-	'noResult': 'There is no team created yet. Please add a team.',
-	'deleteConfirm': 'Do you really want to delete this team including all analysis?',
-	'addSpiritDescription': 'Click to add a new spirit result for a game.',
-	'showMatchesDesc': 'Click to show all games by this team',
-	'createResult': 'Create result',
-	'deleteResultConfirm': 'Do You really want to delete this result?'
-});
 
-// Setting translations
-Locale.define(locale, 'Setting', {
-	'title': 'Settings',
-	'globalHeader': 'Globale Settings',
-	'language': 'Language',
-	'update': 'Search for updates automaticly',
-	'de-DE': 'German',
-	'en-US': 'English (US)'
+	/**
+	 * initialize Setting Model
+	 * @param string sName
+	 */
+	initialize: function() {
+
+		this.__class = 'Models_Setting';
+
+
+	},
+
+	/**
+	 * loads data from local storage
+	 * @return {*}
+	 */
+	load: function() {
+
+		// init storage object
+		var oStorage = new LocalStorage();
+
+		var oData = oStorage.get(this.__class);
+
+
+		// if local storage is empty - set empty array
+		if (null == oData) {
+			return this;
+		}
+
+		// iterate all objects and create class instances
+		Object.each(oData, function(value, key) {
+			this[key] = value;
+		}.bind(this));
+
+		this.__fromJson(oData);
+
+		return this;
+	},
+
+	/**
+	 * save current collection to local Storage
+	 */
+	save: function() {
+
+		// init storage object
+		var oStorage = new LocalStorage();
+
+		// save tournaments
+		oStorage.set(this.__class, this);
+
+	},
+
+	__fromJson: function(data) {
+
+	}
 });
