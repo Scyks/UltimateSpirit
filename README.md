@@ -1,4 +1,4 @@
-UltimateSpirit (BETA)
+UltimateSpirit (ALPHA)
 ==============
 
 This is a software to manage ultimate frisbee spirit scores.
