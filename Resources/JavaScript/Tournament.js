@@ -695,14 +695,18 @@ var Tournament = new Class({
 			oOverlayContent.empty();
 			oOverlayContent.set('html', HTML);
 
-			// set values
-			if (iDay && iTeamId) {
-				oOverlayContent.getElement('select.fromTeam').set('value', iTeamId);
-				oOverlayContent.getElement('select.day').set('value', iDay);
-			}
-
 			// Template parse
 			Template.parse(oOverlayContent);
+
+			// set values
+			if (iDay && iTeamId) {
+
+				oOverlayContent.getElement('select.fromTeam').set('value', iTeamId);
+				oOverlayContent.getElement('select.fromTeam').fireEvent('change');
+				oOverlayContent.getElement('select.day').set('value', iDay);
+				oOverlayContent.getElement('select.day').fireEvent('change');
+			}
+
 
 		}.bind(this));
 	},
@@ -797,6 +801,10 @@ var Tournament = new Class({
 		}.bind(this));
 	},
 
+	/**
+	 * this method will save the result on open spirit
+	 * @param Object oElement
+	 */
 	saveSpiritAction: function(oElement) {
 		oElement.addEvent('click', function() {
 
@@ -892,6 +900,10 @@ var Tournament = new Class({
 		});
 	},
 
+	/**
+	 * This method opens overlay for editing the spirit result
+	 * @param oElement
+	 */
 	editResultAction: function(oElement) {
 
 		// get id
@@ -918,7 +930,7 @@ var Tournament = new Class({
 			// get teams for select, but exclude current
 			aTeams = [];
 			this.tournament.teams.toArray().each(function(el) {
-				if (el.id != id) {
+				if (el.id != iTeamId) {
 					aTeams.push(el);
 				}
 			});
@@ -948,10 +960,11 @@ var Tournament = new Class({
 			// Template parse
 			Template.parse(oOverlayContent);
 
-			console.log(oCurrentResult);
 			// set values
 			oOverlayContent.getElement('select.fromTeam').set('value', oCurrentResult.fromTeam);
+			oOverlayContent.getElement('select.fromTeam').fireEvent('change');
 			oOverlayContent.getElement('select.day').set('value', oCurrentResult.day);
+			oOverlayContent.getElement('select.day').fireEvent('change');
 
 			['rules', 'fouls', 'fair', 'attitude', 'spirit'].each(function(sSection) {
 				var oPoint = oOverlayContent.getElement('circle.' + sSection + '[data-points=' + oCurrentResult[sSection] + ']');
@@ -961,6 +974,10 @@ var Tournament = new Class({
 		}.bind(this));
 	},
 
+	/**
+	 * this method deletes a result
+	 * @param oElement
+	 */
 	deleteResultAction: function(oElement) {
 
 		// get id
