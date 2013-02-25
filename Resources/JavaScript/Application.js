@@ -72,7 +72,7 @@ var Application = new Class({
 				this.page = Params[0];
 				var aParams = Params[1].split('&');
 				aParams.each(function(param) {
-					keyValue = param.split('=');
+					var keyValue = param.split('=');
 					this.params[keyValue[0]] = keyValue[1];
 				}.bind(this));
 

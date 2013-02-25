@@ -872,6 +872,8 @@ var Tournament = new Class({
 			// refresh List
 			this.refreshList();
 
+			return true;
+
 		}.bind(this));
 	},
 
