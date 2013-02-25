@@ -154,89 +154,80 @@ var Tournament = new Class({
 		<div class="overlay spirit" data-controller="Overlay/content">\
 			<div class="content">\
 				<a class="button close" data-controller="Overlay/close">X</a>\
-				<svg id="sotg" height="850" width="600" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >\
-					<svg viewBox="0 0 744 1052">\
-						<image x="0" y="0" height="1052" width="744" xlink:href="Resources/images/SOTG_v2010_{{_lang}}.svg" />\
-					</svg>\
-					\
-					<circle data-category="rules" data-points="0" data-controller="Tournament/setPoints" class="rules" cx="320" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="rules" data-points="1" data-controller="Tournament/setPoints" class="rules" cx="374" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="rules" data-points="2" data-controller="Tournament/setPoints" class="rules" cx="428" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="rules" data-points="3" data-controller="Tournament/setPoints" class="rules" cx="482" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="rules" data-points="4" data-controller="Tournament/setPoints" class="rules" cx="536" cy="318" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<g class="rules">\
-						<line class="1" x1="308" x2="333" y1="300" y2="334" style="stroke:#000000; stroke-width: 4" />\
-						<line class="2" x1="333" x2="308" y1="300" y2="334" style="stroke:#000000; stroke-width: 4" />\
-					</g>\
-					\
-					<circle data-category="fouls" data-points="0" data-controller="Tournament/setPoints" class="fouls" cx="320" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="fouls" data-points="1" data-controller="Tournament/setPoints" class="fouls" cx="374" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="fouls" data-points="2" data-controller="Tournament/setPoints" class="fouls" cx="428" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="fouls" data-points="3" data-controller="Tournament/setPoints" class="fouls" cx="482" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="fouls" data-points="4" data-controller="Tournament/setPoints" class="fouls" cx="536" cy="394" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<g class="fouls">\
-						<line class="1" x1="308" x2="333" y1="376" y2="410" style="stroke:#000000; stroke-width: 4" />\
-						<line class="2" x1="333" x2="308" y1="376" y2="410" style="stroke:#000000; stroke-width: 4" />\
-					</g>\
-					\
-					<circle	data-category="fair" data-points="0" data-controller="Tournament/setPoints" class="fair" cx="320" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle	data-category="fair" data-points="1" data-controller="Tournament/setPoints" class="fair" cx="374" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle	data-category="fair" data-points="2" data-controller="Tournament/setPoints" class="fair" cx="428" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle	data-category="fair" data-points="3" data-controller="Tournament/setPoints" class="fair" cx="482" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle	data-category="fair" data-points="4" data-controller="Tournament/setPoints" class="fair" cx="536" cy="470" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<g class="fair">\
-						<line class="1" x1="308" x2="333" y1="452" y2="486" style="stroke:#000000; stroke-width: 4" />\
-						<line class="2" x1="333" x2="308" y1="452" y2="485" style="stroke:#000000; stroke-width: 4" />\
-					</g>\
-					\
-					<circle data-category="attitude" data-points="0" data-controller="Tournament/setPoints" class="attitude" cx="320" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="attitude" data-points="1" data-controller="Tournament/setPoints" class="attitude" cx="374" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="attitude" data-points="2" data-controller="Tournament/setPoints" class="attitude" cx="428" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="attitude" data-points="3" data-controller="Tournament/setPoints" class="attitude" cx="482" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="attitude" data-points="4" data-controller="Tournament/setPoints" class="attitude" cx="536" cy="546" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<g class="attitude">\
-						<line class="1" x1="308" x2="333" y1="528" y2="562" style="stroke:#000000; stroke-width: 4" />\
-						<line class="2" x1="333" x2="308" y1="528" y2="562" style="stroke:#000000; stroke-width: 4" />\
-					</g>\
-					\
-					<circle data-category="spirit" data-points="0" data-controller="Tournament/setPoints" class="spirit" cx="320" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="spirit" data-points="1" data-controller="Tournament/setPoints" class="spirit" cx="374" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="spirit" data-points="2" data-controller="Tournament/setPoints" class="spirit" cx="428" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="spirit" data-points="3" data-controller="Tournament/setPoints" class="spirit" cx="482" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<circle data-category="spirit" data-points="4" data-controller="Tournament/setPoints" class="spirit" cx="536" cy="622" r="25" stroke="rgba(125, 125, 125, 1)" stroke-width="1" fill="transparent"/>\
-					<g class="spirit">\
-						<line class="1" x1="308" x2="333" y1="604" y2="638" style="stroke:#000000; stroke-width: 4" />\
-						<line class="2" x1="333" x2="308" y1="604" y2="638" style="stroke:#000000; stroke-width: 4" />\
-					</g>\
-					\
-					<text class="1p" x="363" y="718" fill="black">0</text>\
-					<text class="2p" x="417" y="718" fill="black">0</text>\
-					<text class="3p" x="472" y="718" fill="black">0</text>\
-					<text class="4p" x="526" y="718" fill="black">0</text>\
-					\
-					<text class="sum" x="95" y="718" fill="black">0</text>\
-				</svg>\
-				<div class="element fromTeam">\
-					<select name="fromTeam" class="fromTeam error" data-controller="Tournament/selectTeam">\
-						<option value="">{{_pleaseChoose}}</option>\
-						{{#teams}}\
-							<option value="{{id}}">{{name}}</option>\
-						{{/teams}}	\
-					</select>\
-				</div>\
-				<div class="element toTeam">{{toTeam}}</div>\
-				<div class="element day">\
-					<select name="day" class="day">\
-						<option value="1">Day 1</option>\
-						<option value="2">Day 2</option>\
-					</select>\
-				</div>\
+				<h1>{{_title}}</h1>\
 				\
-				<a class="button element save orange" data-id="{{toTeamId}}" data-result="{{resultId}}" data-controller="Tournament/saveSpirit">{{_save}}</a>\
-				<a class="button element cancel" data-controller="Overlay/close">{{_cancel}}</a>\
+				<section class="description">\
+					<div class="left">{{_spiritDescription}}</div>\
+					<div class="right">{{_fillOutInstructions}}</div>\
+				</section>\
+				<section class="gameInfo">\
+					<div class="fromTeam">\
+						<select name="fromTeam" class="fromTeam error" data-controller="Tournament/selectTeam">\
+							<option value="">{{_pleaseChoose}}</option>\
+							{{#teams}}\
+								<option value="{{id}}">{{name}}</option>\
+							{{/teams}}	\
+						</select>\
+						<span class="desc">{{_fromTeam}}</span>\
+					</div>\
+					\
+					<div class="toTeam">\
+						<h2>{{toTeam}}</h2>\
+						<span class="desc">{{_toTeam}}</span>\
+					</div>\
+					\
+					<div class="day">\
+						<select name="day" class="day">\
+							<option value="1">Day 1</option>\
+							<option value="2">Day 2</option>\
+						</select>\
+						<span class="desc">{{_day}}</span>\
+					</div>\
+				</section>\
+				\
+				<section class="scores">\
+					<table>\
+						<tr class="headline">\
+							<td class="desc" colspan="2">&nbsp;</td>\
+							{{#points}}\
+								<td class="points">{{desc}}</td>\
+							{{/points}}\
+							<td class="spacer10">&nbsp;</td>\
+						</tr>\
+						{{#categories}}\
+							<tr class="category">\
+								<td class="desc">\
+									<strong>{{title}}</strong>\
+									<span class="desc">{{desc}}</span>\
+								</td>\
+								<td class="spacer">&nbsp;</td>\
+								{{#points}}\
+									<td class="score">\
+										<a data-category="{{category}}" data-points="{{points}}" data-controller="Tournament/setPoints"  class="button p{{points}} {{category}}">{{points}}</a>\
+									</td>\
+								{{/points}}\
+								<td class="spacer10">&nbsp;</td>\
+							</tr>\
+						{{/categories}}\
+						\
+						<tr>\
+							<td class="sum"><div>0</div></td>\
+							<td class="spacer">&nbsp;</td>\
+							{{#points}}\
+								<td class="sum point p{{points}}"><div>0</div></td>\
+							{{/points}}\
+							<td class="spacer10">&nbsp;</td>\
+						</tr>\
+					</table>\
+				</section>\
+				<section class="buttonBar">\
+					<a class="button element save orange" data-id="{{toTeamId}}" data-result="{{resultId}}" data-controller="Tournament/saveSpirit">{{_save}}</a>\
+					<a class="button element cancel mRight10" data-controller="Overlay/close">{{_cancel}}</a>\
+				</section>\
 			</div>\
 		</div>\
-		',
+	',
+
 	/**
 	 * tournament id
 	 * @var integer
@@ -681,7 +672,14 @@ var Tournament = new Class({
 				_pleaseChoose: Locale.get('default.pleaseChoose'),
 				_cancel: Locale.get('default.cancel'),
 				_save: Locale.get('default.save'),
-				_lang: (('de-DE' == Locale.getCurrent().name) ? 'DE' : 'EN'),
+				_title: Locale.get('Spirit.title'),
+				_spiritDescription: Locale.get('Spirit.spiritDescription'),
+				_fillOutInstructions: Locale.get('Spirit.fillOutInstructions'),
+				_fromTeam: Locale.get('Spirit.fromTeam'),
+				_toTeam: Locale.get('Spirit.toTeam'),
+				_day: Locale.get('Spirit.day'),
+				points: Locale.get('Spirit.points'),
+				categories: Locale.get('Spirit.categories'),
 
 				toTeam: oCurrentTeam.name,
 				toTeamId: oCurrentTeam.id,
@@ -709,6 +707,8 @@ var Tournament = new Class({
 
 
 		}.bind(this));
+
+		//oElement.fireEvent('click');
 	},
 
 	/**
@@ -740,40 +740,23 @@ var Tournament = new Class({
 			// get points
 			var iPoints = parseInt(oElement.get('data-points'));
 
-			// get Group for mark flag
-			var oGroup = oElement.getParent().getElement('g.' + sCategory);
-
-			// get both lines
-			var oLine1 = oGroup.getElement('line.1');
-			var oLine2 = oGroup.getElement('line.2');
-
-			// get x and y coordinates
-			var iCx = parseInt(oElement.get('cx'));
-			var iCy = parseInt(oElement.get('cy'));
-
-			// set new coordinates
-			oLine1.set('x1', iCx - 12);
-			oLine1.set('x2', iCx + 13);
-			oLine1.set('y1', iCy - 18);
-			oLine1.set('y2', iCy + 16);
-			oLine2.set('x1', iCx + 13);
-			oLine2.set('x2', iCx - 12);
-			oLine2.set('y1', iCy - 18);
-			oLine2.set('y2', iCy + 16);
+			if (oElement.getParent('tr').getElement('a.active')) {
+				oElement.getParent('tr').getElement('a.active').removeClass('active');
+			}
 
 			// set points action
 			var setPoints = function(iPoints, bAdd) {
 				if (0 < iPoints) {
 
 					// get point sum element
-					var oPoint = oElement.getParent().getElement('text.' + iPoints + 'p');
+					var oPoint = oElement.getParent('table').getElement('td.sum.p' + iPoints + ' div');
 
 					// get all sum element
-					var oSum = oElement.getParent().getElement('text.sum');
+					var oSum = oElement.getParent('table').getElement('td.sum div');
 
 					// get current points
-					var iCurrentPoints = parseInt(oPoint.textContent);
-					var iSumPoints = parseInt(oSum.textContent);
+					var iCurrentPoints = parseInt(oPoint.get('html'));
+					var iSumPoints = parseInt(oSum.get('html'));
 
 					// ad or remove points
 					if (true == bAdd) {
@@ -797,6 +780,8 @@ var Tournament = new Class({
 
 			// set to view
 			setPoints(iPoints, true);
+
+			oElement.addClass('active');
 
 		}.bind(this));
 	},
@@ -944,7 +929,14 @@ var Tournament = new Class({
 				_pleaseChoose: Locale.get('default.pleaseChoose'),
 				_cancel: Locale.get('default.cancel'),
 				_save: Locale.get('default.save'),
-				_lang: (('de-DE' == Locale.getCurrent().name) ? 'DE' : 'EN'),
+				_title: Locale.get('Spirit.title'),
+				_spiritDescription: Locale.get('Spirit.spiritDescription'),
+				_fillOutInstructions: Locale.get('Spirit.fillOutInstructions'),
+				_fromTeam: Locale.get('Spirit.fromTeam'),
+				_toTeam: Locale.get('Spirit.toTeam'),
+				_day: Locale.get('Spirit.day'),
+				points: Locale.get('Spirit.points'),
+				categories: Locale.get('Spirit.categories'),
 
 				toTeam: oCurrentTeam.name,
 				toTeamId: oCurrentTeam.id,
@@ -969,7 +961,7 @@ var Tournament = new Class({
 			oOverlayContent.getElement('select.day').fireEvent('change');
 
 			['rules', 'fouls', 'fair', 'attitude', 'spirit'].each(function(sSection) {
-				var oPoint = oOverlayContent.getElement('circle.' + sSection + '[data-points=' + oCurrentResult[sSection] + ']');
+				var oPoint = oOverlayContent.getElement('a.' + sSection + '[data-points=' + oCurrentResult[sSection] + ']');
 				oPoint.fireEvent('click');
 			});
 

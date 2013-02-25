@@ -82,5 +82,30 @@ Locale.define(locale, 'Setting', {
 	'language': 'Sprache',
 	'update': 'Automatisch nach Updates suchen',
 	'de-DE': 'Deutsch',
-	'en-US': 'English (US)',
+	'en-US': 'English (US)'
+});
+
+// definitions of Spirit sheet
+Locale.define(locale, 'Spirit', {
+	'title': 'Spirit of the Game-Bewertungsbogen',
+	'spiritDescription': 'Spirit of the Game ist ein fundamentaler Bestandteil des Sportes (Beach) Ultimate. Eingedenk dessen wurde der Bogen gestaltet, um die Teams im SOTG zu unterrichten und um ihnen zu helfen, ein besseres Verständnis ihrer Stärken und Schwächen hinsichtlich des Spirits zu erlangen.',
+	'fillOutInstructions': 'Dein ganzes Team sollte daran beteiligt sein, das andere Team zu bewerten. Kreise einfach je ein Feld in jeder der fünf Zeilen ein und addiere die Punkte, um den Spiritwert für das andere Team zu ermitteln.',
+	'fromTeam': 'Unser Teamname',
+	'toTeam': 'Ihr Teamname',
+	'day': 'Tag',
+	'points': [
+		{'points': 0, 'desc': '0 Punkte'},
+		{'points': 1, 'desc': 'je 1 Punkt'},
+		{'points': 2, 'desc': 'je 2 Punkte'},
+		{'points': 3, 'desc': 'je 3 Punkte'},
+		{'points': 4, 'desc': 'je 4 Punkte'},
+	],
+	'categories': [
+		{'category': 'rules', 'title': 'Regelkenntnis und –gebrauch', 'desc': 'Zum Beispiel: Sie haben keine unangemessenen oder ungerecht- fertigten Calls gemacht. Sie haben die Regeln nicht absichtlich misinterpretiert. Sie hielten sich an die Zeitlimits. Sie waren bereit, die Regeln zu erklären und/oder sich erklären zu lassen.'},
+		{'category': 'fouls', 'title': 'Fouls und Körperkontakt', 'desc': 'Zum Beispiel: Sie vermieden Fouls, Körperkontakt und gefähr- liche Spielweisen.'},
+		{'category': 'fair', 'title': 'Aufrichtigkeit und Fairplay', 'desc': 'Zum Beispiel: Sie entschuldigten sich für begangene Fouls. Sie korrigierten Mitspieler, wenn diese falsche oder unnötige Calls machten. Sie waren bereit zuzugeben, dass wir Recht hatten und zogen ihren Call zurück.'},
+		{'category': 'attitude', 'title': 'Positive Einstellung und Selbstbeherrschung', 'desc': 'Zum Beispiel: Sie stellten sich vor. Sie kommunizierten ohne abfällige oder aggressive Sprache. Sie beglückwünschten uns zu gelungenen Spielaktionen. Sie hinterließen einen positiven Eindruck während und nach dem Spiel, etwa im Spirit Circle.'},
+		{'category': 'spirit', 'title': 'Unser Spirit verglichen mit ihrem', 'desc': 'Wie schneidet unser Team verglichen mit ihrem ab in Hinblick auf Regelkenntnis, Körperkontakt, Aufrichtigkeit und Fairplay, Positive Einstellung und Selbstbeherrschung?'}
+	]
+
 });

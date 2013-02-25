@@ -84,3 +84,29 @@ Locale.define(locale, 'Setting', {
 	'de-DE': 'German',
 	'en-US': 'English (US)'
 });
+
+
+// definitions of Spirit sheet
+Locale.define(locale, 'Spirit', {
+	'title': 'Spirit of the Game Score Sheet',
+	'spiritDescription': 'Spirit of the Game is a fundamental part of (Beach) Ultimate. With this in mind the sheet was designed to educate teams in SOTG and help teams achieve a better understanding of their strengths and weaknesses in terms of Spirit.',
+	'fillOutInstructions': 'Your whole team should be involved in rating the other team! Simply circle one box in each of the five lines and sum up the points to determine the Spirit score for the other team.',
+	'fromTeam': 'Our team name',
+	'toTeam': 'Their team name',
+	'day': 'Tag',
+	'points': [
+		{'points': 0, 'desc': '0 Points'},
+		{'points': 1, 'desc': '1 Point each'},
+		{'points': 2, 'desc': '2 Point each'},
+		{'points': 3, 'desc': '3 Point each'},
+		{'points': 4, 'desc': '4 Point each'},
+	],
+	'categories': [
+		{'category': 'rules', 'title': 'Rules Knowledge and Use', 'desc': 'For example: They did not make unjustified calls. They did not purposefully misinterpret the rules. They kept to time limits. They were willing to teach and/or learn the rules'},
+		{'category': 'fouls', 'title': 'Fouls and Body Contact', 'desc': 'For example: They avoided fouling, contact, and dangerous plays'},
+		{'category': 'fair', 'title': 'Fair-Mindedness', 'desc': 'For example: They apologized for their own fouls. They informed teammates when they made wrong or unnecessary calls. They were willing to admit that we were right and retracted their call'},
+		{'category': 'attitude', 'title': 'Positive Attitude and Self-Control', 'desc': 'For example: They introduced themselves. They communicated without derogatory or aggressive language. They complimented us on our good plays. They left an overall positive impression during and after the game, e.g. during the Spirit circle'},
+		{'category': 'spirit', 'title': 'Our Spirit compared to theirs', 'desc': 'How did our team compare to theirs with regards to rules knowledge, body contact, fair-mindedness, positive attitude and self-control?'}
+	]
+
+});
