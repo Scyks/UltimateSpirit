@@ -47,6 +47,29 @@ var Application = new Class({
 	],
 
 	/**
+	 * overlay - new Software Versoin found
+	 * @var string
+	 */
+	overlay: '\
+		<div class="overlayBg transparent" data-controller="Overlay/background"></div>\
+		<div class="overlay update" data-controller="Overlay/content">\
+			<div class="content">\
+				<a class="button close" data-controller="Overlay/close">X</a>\
+				<h1>{{_title}}</h1>\
+				{{_desc}}\
+				\
+				<section class="buttonBar">\
+					<a data-controller="Application/skipUpdate" data-version="{{version}}" class="button cancel mRight10">{{_skip}}</a>\
+					<a data-controller="Application/remindMeLater" class="button cancel mRight10">{{_remindMeLater}}</a>\
+					<a data-controller="Application/openUpdate" class="button save orange" href="http://www.ultimatespirit.de/download" target="_blank">{{_download}}</a>\
+				</section>\
+			</div>\
+		</div>\
+	',
+
+	/**
+
+	/**
 	 * Init Application
 	 */
 	initAction: function() {
@@ -54,12 +77,27 @@ var Application = new Class({
 
 		var oSettings = new Models_Setting().load();
 
+		if (null == oSettings.id) {
+
+			// detect System Language
+			if (this.availLanguages.contains(navigator.language)) {
+				oSettings.language = navigator.language;
+				oSettings.save();
+			}
+		}
+
+
 		// add Change event, for language
 		Locale.addEvent('change', this.translateMain);
 
 		// set current locale
 		Locale.use(oSettings.language);
 
+
+		if (true == oSettings.update) {
+			// check for Update
+			this.checkForUpdates(oSettings);
+		}
 
 		// get current controller
 		var aPages = document.location.href.split('#');
@@ -96,29 +134,6 @@ var Application = new Class({
 		}
 		oController.init(this.params);
 
-		//this.getController('Settings').init();
-
-
-//		var sUrl = 'http://localhost/index.php?data=/api/xml/9413A2CC2CF109FCBE844E5E4249C805/user?username=scyks';
-//		new Request.HTML({
-//			url: sUrl,
-//			method: 'get',
-//			noCache: true,
-//			headers: {
-//
-//				foobar: 'foo'
-//			},
-//
-//		}).send();
-//
-//
-//		invocation = new XMLHttpRequest();
-//		if(invocation)
-//		{
-//			invocation.open('GET', sUrl, true);
-//			//invocation.onreadystatechange = handler;
-//			invocation.send();
-//		}
 	},
 
 	translateMain: function() {
@@ -160,9 +175,102 @@ var Application = new Class({
 
 	},
 
+	/**
+	 * Open Settings Controller
+	 * @param Object oElement
+	 */
 	settingsAction: function(oElement) {
 		oElement.addEvent('click', function() {
 			this.getController('Settings').init();
 		}.bind(this));
+	},
+
+	checkForUpdates: function(oSettings) {
+
+		var o7DaysBefore = new Date().decrement('day', 7);
+
+		if (null == oSettings.lastUpdate || oSettings.lastUpdate < o7DaysBefore) {
+
+			var oJsonP = new Request.JSONP({
+				url: 'http://update.ultimatespirit.de',
+				data: {
+					app: 'USOA',
+					format: 'json'
+				},
+				callbackKey: 'jsonp',
+
+				onSuccess: function(oUpdate) {
+					if (false != oUpdate.version && 'false' != oUpdate.version) {
+
+						if ((false == AppVersion || AppVersion < oUpdate.version) && !oSettings.skipVersions.contains(oUpdate.version.toString())) {
+
+							// detect new Version
+							this.showUpdateOverlay(oUpdate.version);
+						}
+					}
+
+					oSettings.lastUpdate = new Date();
+					oSettings.save();
+					
+				}.bind(this)
+			});
+
+			oJsonP.send();
+
+		}
+	},
+
+	showUpdateOverlay: function(newVersion) {
+		var obj = {
+			_title: Locale.get('Update.title'),
+			_desc: Locale.get('Update.desc').replace('%version%', newVersion).replace('%oldVersion%', AppVersion),
+			_download: Locale.get('Update.download'),
+			_skip: Locale.get('Update.skip'),
+			_remindMeLater: Locale.get('Update.remindMeLater'),
+			version: newVersion
+		};
+
+		// render HTML
+		var HTML = Mustache.render(this.overlay, obj);
+
+		var oOverlayContent = document.body.getElement('.overlayContent');
+		oOverlayContent.empty();
+		oOverlayContent.set('html', HTML);
+
+		// Template parse
+		Template.parse(oOverlayContent);
+	},
+
+	skipUpdateAction: function(oElement) {
+		oElement.addEvent('click', function() {
+
+			var version = oElement.get('data-version');
+
+			var oSettings = new Models_Setting().load();
+			if (!oSettings.skipVersions.contains(version)) {
+				oSettings.skipVersions.push(version);
+			}
+			oSettings.save();
+
+			document.body.getElement('.overlayContent').empty();
+		});
+	},
+
+	remindMeLaterAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			var oSettings = new Models_Setting().load();
+			oSettings.lastUpdate = new Date();
+			oSettings.save();
+
+			document.body.getElement('.overlayContent').empty();
+		});
+	},
+
+	openUpdateAction: function(oElement) {
+		oElement.addEvent('click', function() {
+			document.body.getElement('.overlayContent').empty();
+		});
 	}
+
+
 });

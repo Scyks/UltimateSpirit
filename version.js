@@ -34,4 +34,4 @@
  * POSSIBILITY OF SUCH DAMAGE.
  */
 
-var AppVersion = false;
+var AppVersion = '0';

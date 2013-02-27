@@ -108,7 +108,9 @@
    * the skipped string, which is the entire tail if no match can be made.
    */
   Scanner.prototype.scanUntil = function (re) {
-    var match, pos = this.tail.search(re);
+  	// fix for JSONP Request
+	if (!this.tail.search) return false;
+	var match, pos = this.tail.search(re);
 
     switch (pos) {
     case -1:

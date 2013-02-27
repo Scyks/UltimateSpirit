@@ -225,7 +225,7 @@ input {
 }
 // Content
 .dashboard {
-	width: 650px;
+	width: 660px;
 	margin:  auto;
 	overflow: hidden;
 
@@ -694,60 +694,6 @@ input {
 				}
 
 			}
-//			svg {
-//				border-radius: 10px;
-//				text {
-//					font-size: 21px;
-//
-//					&.sum {
-//						font-size: 40px;
-//					}
-//				}
-//				circle {cursor: pointer;}
-//			}
-//
-//			.element {
-//				position: absolute;
-//				font-size: 16px;
-//
-//				select {
-//					padding: 5px;
-//					width: 145px;
-//					font-size: 16px;
-//					&.error {
-//						background: #ff8551;
-//					}
-//				}
-//
-//				&.fromTeam {
-//					left: 42px;
-//					top: 162px;
-//
-//				}
-//
-//				&.toTeam {
-//					left: 227px;
-//					top: 166px;
-//					width: 149px;
-//					line-height: 12px;
-//					word-wrap: break-word;
-//					text-align: center;
-//				}
-//
-//				&.day {
-//					left: 412px;
-//					top: 162px;
-//				}
-//
-//				&.save {
-//					left: 450px;
-//					top: 770px;
-//				}
-//				&.cancel {
-//					left: 60px;
-//					top: 770px;
-//				}
-//			}
 		}
 
 		&.settings {
@@ -755,8 +701,6 @@ input {
 			.content {
 				background: white;
 				height: 200px;
-
-
 
 				section {
 					margin: 20px;
@@ -793,6 +737,33 @@ input {
 				input[type=checkbox] {
 					float: left;
 					margin-right: 10px;
+				}
+			}
+		}
+
+		&.update {
+
+			.content {
+				background: white;
+				min-height: 150px;
+				padding: 0 20px 20px 20px;
+				width: 600px;
+
+				h1 {
+					padding: 10px 0px;
+				}
+
+				section.buttonBar {
+					margin-top: 40px;
+					clear: both;
+					overflow: hidden;
+
+					a.save {
+						float: right;
+					}
+					a.cancel {
+						float: left;
+					}
 				}
 			}
 		}

@@ -246,7 +246,7 @@ input {
   display: block;
 }
 .dashboard {
-  width: 650px;
+  width: 660px;
   margin: auto;
   overflow: hidden;
 }
@@ -705,4 +705,24 @@ input {
 .overlayContent .overlay.settings .content input[type=checkbox] {
   float: left;
   margin-right: 10px;
+}
+.overlayContent .overlay.update .content {
+  background: white;
+  min-height: 150px;
+  padding: 0 20px 20px 20px;
+  width: 600px;
+}
+.overlayContent .overlay.update .content h1 {
+  padding: 10px 0px;
+}
+.overlayContent .overlay.update .content section.buttonBar {
+  margin-top: 40px;
+  clear: both;
+  overflow: hidden;
+}
+.overlayContent .overlay.update .content section.buttonBar a.save {
+  float: right;
+}
+.overlayContent .overlay.update .content section.buttonBar a.cancel {
+  float: left;
 }

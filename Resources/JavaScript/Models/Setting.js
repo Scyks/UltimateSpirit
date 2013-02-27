@@ -54,6 +54,18 @@ var Models_Setting = new Class({
 	 */
 	update: true,
 
+	/**
+	 * contains date where check for Updates
+	 * @var date
+	 */
+	lastUpdate: null,
+
+	/**
+	 * contaisn versions to skip
+	 * @var array
+	 */
+	skipVersions: [],
+
 
 	/**
 	 * initialize Setting Model
@@ -101,12 +113,16 @@ var Models_Setting = new Class({
 		// init storage object
 		var oStorage = new LocalStorage();
 
+		if (null == this.id) {
+			this.id = 1;
+		}
+
 		// save tournaments
 		oStorage.set(this.__class, this);
 
 	},
 
 	__fromJson: function(data) {
-
+		this.lastUpdate = new Date(this.lastUpdate);
 	}
 });

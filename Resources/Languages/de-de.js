@@ -109,3 +109,12 @@ Locale.define(locale, 'Spirit', {
 	]
 
 });
+
+// Update Check
+Locale.define(locale, 'Update', {
+	'title': 'Es ist eine neue Version der Software vorhanden.',
+	'desc': 'Ultimate Spirit Offline App %version% ist jetzt verfügbar - Du hast Version %oldVersion%. Möchtest du die neue Version herunterladen?',
+	'download': 'Download',
+	'skip': 'Diese Version überspringen',
+	'remindMeLater': 'Später erinnern'
+});
