@@ -211,7 +211,7 @@ var Application = new Class({
 
 					oSettings.lastUpdate = new Date();
 					oSettings.save();
-					
+
 				}.bind(this)
 			});
 
