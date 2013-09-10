@@ -180,6 +180,7 @@ var Tournament = new Class({
 						<select name="day" class="day">\
 							<option value="1">Day 1</option>\
 							<option value="2">Day 2</option>\
+							<option value="3">Day 3</option>\
 						</select>\
 						<span class="desc">{{_day}}</span>\
 					</div>\

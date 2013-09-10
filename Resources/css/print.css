@@ -1,6 +1,6 @@
 /**
  * @author        Ronald Marske <ronaldmarske@yaoo.de>
- * @filesource    index.php
+ * @filesource    Resources/css/print.css
  *
  * @copyright     Copyright (c) 2012 Ronald Marske, All rights reserved.
  *
@@ -33,5 +33,8 @@
  * ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  * POSSIBILITY OF SUCH DAMAGE.
  */
-
-var AppVersion = '1.0.1';
+html {background: none;}
+.button {display: none;}
+.box {border: 0; background: none;}
+.matches .teams li, .matches .teams li.headline span {color: black;}
+.box h2, h1 {color: black;}
